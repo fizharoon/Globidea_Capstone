@@ -6,3 +6,13 @@ Mentors: Stefano Foresti, Jim Agutter
 
 Goal: Create a website that is a central hub for accurate information that students can view. The information will be taken from credible sources
 and our website will dynamically update as information from the original websites update on their end.
+
+Set Up:
+
+- Create virtual environment using conda
+
+- pip install django
+
+- cd into "Globidea" directory
+
+- python manage.py runserver
