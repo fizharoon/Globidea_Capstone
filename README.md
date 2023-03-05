@@ -11,8 +11,10 @@ Set Up:
 
 - Create virtual environment using conda
 
+- cd into "Globidea" directory
+
 - pip install django
 
-- cd into "Globidea" directory
+- pip3 install -r requirements.txt
 
 - python manage.py runserver
