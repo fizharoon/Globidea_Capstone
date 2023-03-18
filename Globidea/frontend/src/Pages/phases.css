@@ -28,12 +28,12 @@
     flex-direction: row;
     justify-content: space-between;
     cursor: pointer;
-    background-color: #CC0000;
+    background-color: darkred;
     /*border-radius: 1 rem;*/
   }
   
   .accordion-title:hover {
-    background-color: #CC0000;
+    background-color: darkred;
   }
   
   .accordion-title,
