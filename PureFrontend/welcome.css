@@ -10,3 +10,34 @@
 *{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.navbar{
+    overflow: hidden;
+    background-color: #CC0000;
+    width: 100%;
+    height: 55px;
+}
+
+.navbar ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar li{
+    display: inline;
+}
+
+.navbar a{
+    float: left;
+    font-size: large;
+    color: white;
+    text-align: center;
+    padding: 15px 16px;
+    text-decoration: none;
+}
+
+.navbar a.icon{
+    background-color: white !important;
+    padding-left: 10px;
+}
