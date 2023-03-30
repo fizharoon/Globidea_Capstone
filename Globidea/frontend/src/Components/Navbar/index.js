@@ -13,7 +13,7 @@ const Navbar = () => {
         <>
            <Nav>
             <NavLogo to="/">
-                Logo
+                Welcome
             </NavLogo>
             <Bars />
 
@@ -25,25 +25,41 @@ const Navbar = () => {
                     Welcome
                 </NavLink>
                 <NavLink 
-                  to="/about"
+                  to="/phase1"
                   activeStyle={{ color: 'black' }}
                 >
-                    About
+                    Phase 1
                 </NavLink>
                 <NavLink 
-                  to="/contact" 
+                  to="/phase2" 
                   activeStyle={{ color: 'black' }}
                 >
-                    Contact
+                    Phase 2
                 </NavLink>
                 <NavLink
-                  to="/signin"
+                  to="/phase3"
                   activeStyle={{ color: 'black' }}
                 >
-                    Sign In
+                    Phase 3
                 </NavLink>
+
+                <NavLink
+                  to="/phase4"
+                  activeStyle={{ color: 'black' }}
+                >
+                    Phase 4
+                </NavLink>
+
+                <NavLink
+                  to="/phase5"
+                  activeStyle={{ color: 'black' }}
+                >
+                    Phase 5
+                </NavLink>
+
+
                 <NavBtn>
-                    <NavBtnLink to="/sign-up">Sign Up</NavBtnLink>
+                    <NavBtnLink to="/signin">Sign In</NavBtnLink>
                 </NavBtn>
             </NavMenu>
            </Nav> 

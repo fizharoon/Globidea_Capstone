@@ -1,4 +1,4 @@
-const Contact = () => {
+const Phase_4 = () => {
     return (
         <div
             style={{
@@ -8,9 +8,9 @@ const Contact = () => {
                 height: '100vh'
             }}
         >
-           <h1>Contact Us</h1> 
+           <h1>Phase 4</h1> 
         </div>
     );
 };
 
-export default Contact;
+export default Phase_4;
