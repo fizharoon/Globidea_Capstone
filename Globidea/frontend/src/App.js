@@ -9,8 +9,8 @@ import Phase_2 from './Pages/phase2';
 import Phase_3 from './Pages/phase3';
 import Phase_4 from './Pages/phase4';
 import Phase_5 from './Pages/phase5';
-import SignIn from './Pages/signin';
-
+import AdminSignIn from './Pages/adminsignin';
+// import Curator_Page from './Pages/adminsignin'
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
         <Route path="/phase3" element={<Phase_3 />} />
         <Route path="/phase4" element={<Phase_4 />} />
         <Route path="/phase5" element={<Phase_5 />} />
-        <Route path="/signin" element={<SignIn />} />
+        <Route path="/adminsignin" element={<AdminSignIn />} />
       </Routes>
     </BrowserRouter>
   );
