@@ -54,7 +54,9 @@ const Navbar = () => {
 
 
                 <NavBtn>
-                    <NavBtnLink to="/signin">Admin Sign In</NavBtnLink>
+                    {/* <NavBtnLink to="/signin">Admin Sign In</NavBtnLink> */}
+                    <NavBtnLink to="/adminsignin">Admin Sign In</NavBtnLink>
+
                 </NavBtn>
             </NavMenu>
            </Nav> 
