@@ -4,11 +4,11 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Welcome from './Pages';
-import Phase_1 from './Pages/phase1';
-import Phase_2 from './Pages/phase2';
-import Phase_3 from './Pages/phase3';
-import Phase_4 from './Pages/phase4';
-import Phase_5 from './Pages/phase5';
+import Phase_1 from './Pages/Phase1/phase1';
+import Phase_2 from './Pages/Phase2/phase2';
+import Phase_3 from './Pages/Phase3/phase3';
+import Phase_4 from './Pages/Phase4/phase4';
+import Phase_5 from './Pages/Phase5/phase5';
 import SignIn from './Pages/signin';
 
 
