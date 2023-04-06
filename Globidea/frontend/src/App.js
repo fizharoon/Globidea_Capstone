@@ -12,7 +12,8 @@ import Phase_5 from './Pages/phase5';
 import AdminSignIn from './Pages/adminsignin';
 import WithoutNav from './Components/WithoutNav';
 import WithNav from './Components/WithNav';
-// import Curator_Page from './Pages/adminsignin'
+
+import Curator_Page from './Pages/curatorpage'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route element={<WithoutNav />}>
           <Route path="/adminsignin" element={<AdminSignIn />} />
+          <Route path="/curatorpage" element={<Curator_Page/>}/>
         </Route>
         <Route element={<WithNav />}>
           <Route path="/" element={<Welcome />} />
