@@ -10,12 +10,29 @@ import Phase_3 from './Pages/phase3';
 import Phase_4 from './Pages/phase4';
 import Phase_5 from './Pages/phase5';
 import AdminSignIn from './Pages/adminsignin';
+import WithoutNav from './Components/WithoutNav';
+import WithNav from './Components/WithNav';
 // import Curator_Page from './Pages/adminsignin'
 
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
+      <Routes>
+        <Route element={<WithoutNav />}>
+          <Route path="/adminsignin" element={<AdminSignIn />} />
+        </Route>
+        <Route element={<WithNav />}>
+          <Route path="/" element={<Welcome />} />
+          <Route path="/" element={<Welcome />} />
+          <Route path="/phase1" element={<Phase_1 />} />
+          <Route path="/phase2" element={<Phase_2 />} />
+          <Route path="/phase3" element={<Phase_3 />} />
+          <Route path="/phase4" element={<Phase_4 />} />
+          <Route path="/phase5" element={<Phase_5 />} />
+        </Route>
+      </Routes>
+
+      {/* <Navbar/>
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/phase1" element={<Phase_1 />} />
@@ -23,8 +40,11 @@ function App() {
         <Route path="/phase3" element={<Phase_3 />} />
         <Route path="/phase4" element={<Phase_4 />} />
         <Route path="/phase5" element={<Phase_5 />} />
-        <Route path="/adminsignin" element={<AdminSignIn />} />
+
       </Routes>
+      <Routes>
+        <Route path="/adminsignin" element={<AdminSignIn />} />
+      </Routes> */}
     </BrowserRouter>
   );
 }
