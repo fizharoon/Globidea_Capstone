@@ -18,12 +18,7 @@ const Navbar = () => {
             <Bars />
 
             <NavMenu>
-                <NavLink 
-                  to="/"
-                  activeStyle={{ color:'black' }}
-                >
-                    Welcome
-                </NavLink>
+                
                 <NavLink 
                   to="/phase1"
                   activeStyle={{ color: 'black' }}
@@ -59,7 +54,7 @@ const Navbar = () => {
 
 
                 <NavBtn>
-                    <NavBtnLink to="/signin">Sign In</NavBtnLink>
+                    <NavBtnLink to="/adminsignin">Admin Sign In</NavBtnLink>
                 </NavBtn>
             </NavMenu>
            </Nav> 
