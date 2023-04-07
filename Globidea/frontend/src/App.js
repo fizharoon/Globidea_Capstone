@@ -12,7 +12,6 @@ import Phase_5 from './Pages/Phase5/phase5';
 import AdminSignIn from './Pages/adminsignin';
 import WithoutNav from './Components/WithoutNav';
 import WithNav from './Components/WithNav';
-
 import Curator_Page from './Pages/curatorpage'
 
 function App() {

@@ -2,10 +2,15 @@ const Curator_Page = () => {
     return (
         <div>
             <h1>Curator Page</h1>
+            
         <div class="row">
             <div class="column">
+            <label for="insertlink">Insert Link:</label>
+            <input type="text" id="link" name="link"></input>
+            <button>Scrape Data</button>
+            <br></br>
+            <button></button>
                 <label for="phases">Choose a Phase:</label>
-                <br></br>
                 <select name="phases" id="phases">
                     <option value="Phase_1">Phase 1</option>
                     <option value="Phase_2">Phase 2</option>
@@ -23,7 +28,8 @@ const Curator_Page = () => {
                     <option value="smth">Phase 4</option>
                     <option value="else">Phase 5</option>
                 </select>
-
+                <br></br>
+                <button>Update</button>
             </div>
             <div class="column">
                 <table>
