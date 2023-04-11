@@ -3,11 +3,13 @@
     padding: 0;
     box-sizing: border-box;
   }
-  
+
+
   body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 20px;
     background: white;
+
   }
   
   h1 {
@@ -28,21 +30,24 @@
     flex-direction: row;
     justify-content: space-between;
     cursor: pointer;
-    background-color: #CC0000;
+    background-color: darkred;
+    color: white;
     /*border-radius: 1 rem;*/
   }
   
   .accordion-title:hover {
-    background-color: #CC0000;
+    background-color: darkred;
   }
   
   .accordion-title,
   .accordion-content {
     padding: 1rem;
+    background-color: darkred;
   }
   
   .accordion-content {
     background-color: #E2E6E6;
+    
   }
   
   @media screen and (max-width: 700px) {
@@ -51,6 +56,6 @@
     }
   
     .accordion {
-      width: 90%;
+      width: 200%;
     }
   }
