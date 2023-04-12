@@ -1,4 +1,41 @@
 from django.db import models
+import string
+import random
+
+def generate_unique_id():
+    length = 30
+    while True:
+        id = ''.join(random.choices(string.ascii_uppercase, k=length))
+        if scraped_data.objects.filter(id=id).count() == 0:
+            break
+    return id
+
+class scraped_data(models.Model):
+    id = models.CharField(unique=True, max_length=30, primary_key=True)
+    info = models.TextField()
+    url = models.URLField()
+
+class saved_data(models.Model):
+    id = models.CharField(unique=True, max_length=30, primary_key=True)
+    main_header = models.CharField(max_length=30)
+    sub_header = models.CharField(max_length=30)
+    info = models.TextField()
+    url = models.URLField()
+    gen_url = models.URLField()
+
+class headers(models.Model):
+    main_header = models.CharField(max_length=30)
+    sub_header = models.CharField(max_length=30)
+
+class adminInfo(models.Model):
+    username = models.CharField(max_length=30, primary_key=True)
+    password = models.CharField(max_length=30)
+
+
+
+'''
+
+from django.db import models
 
 class Phase(models.Model): #Main Headers
     phase_id = models.CharField(max_length=50, primary_key=True)
@@ -22,3 +59,5 @@ class info(models.Model):
     def __str__(self) -> str:
         return self.subheading_id + ": " + self.info_id
 
+
+'''
