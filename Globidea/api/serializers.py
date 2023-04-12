@@ -16,7 +16,7 @@ class header_serializer(serializers.ModelSerializer):
         model = headers
         fields = '__all__'
 
-class admin_serializer(serializers.ModelSerializer):
+class admin_serializer(serializers.ModelSerializer)
     class Meta:
         model = adminInfo
         fields = '__all__'
