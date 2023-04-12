@@ -8,6 +8,7 @@ from rest_framework.decorators import api_view
 from .models import info, subheading,Phase
 from .serializers import infoSerializer, phaseSerializer, subHeadingSerializer
 
+<<<<<<< HEAD:main/views.py
 
 
 @api_view(['POST'])
@@ -32,3 +33,7 @@ def getInfo(request):
     info = info.objects.all() # all objects
     serializer = infoSerializer(info, many=True) # serialize all objects
     return Response(serializer.data)
+=======
+def index(request):
+    return render(request,'index.html')
+>>>>>>> main:Globidea/main/views.py
