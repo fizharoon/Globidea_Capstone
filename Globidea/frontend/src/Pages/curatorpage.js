@@ -9,9 +9,11 @@ const Curator_Page = () => {
             <input type="text" id="link" name="link"></input>
             <button>Scrape Data</button>
             <br></br>
-            <button></button>
+            {/* with the button click make a call the scrape_date func */}
+            <button></button> 
                 <label for="phases">Choose a Phase:</label>
                 <select name="phases" id="phases">
+                    {/* Might need to change value for phases to numbers only 1-5 */}
                     <option value="Phase_1">Phase 1</option>
                     <option value="Phase_2">Phase 2</option>
                     <option value="Phase_3">Phase 3</option>
@@ -21,6 +23,11 @@ const Curator_Page = () => {
                 <br></br>
                 <label for="subcat">Choose a Sub-Category:</label>
                 <br></br>
+                {/* Preferably would like to auto update the subheadings according to 
+                what main heading/phase was chosen first
+                
+                idea: hide the subheading dropdown and when a value is selected for main heading
+                then the subheading dropdown could appear with the updated values/options*/}
                 <select name="subcat" id="subcat">
                     <option value="application">Phase 1 - Application</option>
                     <option value="orientation">Phase 1 - Orientation</option>
@@ -33,6 +40,7 @@ const Curator_Page = () => {
             </div>
             <div class="column">
                 <table>
+                    {/* heading values would stay hardcoded */}
                     <tr>
                         <th>Company</th>
                         <th>Contact</th>

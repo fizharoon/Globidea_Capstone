@@ -3,7 +3,7 @@ import string
 import random
 
 def generate_unique_id():
-    length = 30
+    length = 40
     while True:
         id = ''.join(random.choices(string.ascii_uppercase, k=length))
         if scraped_data.objects.filter(id=id).count() == 0:
@@ -11,16 +11,16 @@ def generate_unique_id():
     return id
 
 class scraped_data(models.Model):
-    id = models.CharField(unique=True, max_length=30, primary_key=True)
+    id = models.CharField(unique=True, default=generate_unique_id, max_length=30, primary_key=True)
     info = models.TextField()
-    url = models.URLField()
-
+    curator_url = models.URLField()
+    gen_url = models.URLField()
+    
 class saved_data(models.Model):
     id = models.CharField(unique=True, max_length=30, primary_key=True)
     main_header = models.CharField(max_length=30)
     sub_header = models.CharField(max_length=30)
     info = models.TextField()
-    url = models.URLField()
     gen_url = models.URLField()
 
 class headers(models.Model):
