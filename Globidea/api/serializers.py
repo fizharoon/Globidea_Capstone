@@ -8,11 +8,11 @@ class scraped_data_serializer(serializers.ModelSerializer):
         model = scraped_data
         fields = '__all__'
     
-# Retrieving from curator page
-class get_curator_url_serializer(serializers.ModelSerializer):
-    class Meta:
-        model = scraped_data
-        fields = 'url'
+# # Retrieving from curator page
+# class get_url_serializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = scraped_data
+#         fields = 'url'
 
 # store selected info from curator page
 class saved_data_serializer(serializers.ModelSerializer):
@@ -32,4 +32,4 @@ class admin_serializer(serializers.ModelSerializer):
         model = adminInfo
         fields = '__all__'
 
-# Might need to create another serializer to GET info for user drop down tables
+# # Might need to create another serializer to GET info for user drop down tables

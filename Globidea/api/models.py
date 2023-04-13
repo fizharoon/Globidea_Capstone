@@ -2,6 +2,10 @@ from django.db import models
 import string
 import random
 
+
+# SAVE UNIQUE ID'S FROM DATA WE CHOOSE TO SAVE AND MAKE SURE
+# TO AVOID USING THOSE ID'S SO THERE'S NO DUPLICATE ID'S IN THE 
+# SAVED DATA TABLE
 def generate_unique_id():
     length = 40
     while True:
@@ -11,53 +15,39 @@ def generate_unique_id():
     return id
 
 class scraped_data(models.Model):
-    id = models.CharField(unique=True, default=generate_unique_id, max_length=30, primary_key=True)
+    id = models.CharField(unique=True, default=generate_unique_id, max_length=40, primary_key=True)
     info = models.TextField()
     curator_url = models.URLField()
     gen_url = models.URLField()
-    
+
+    class Meta:
+        # Django APi prefixes table names with api_"....""
+        # therefore this is to set a custom table name
+        # to match with the class name
+        db_table = 'scraped_data'
+
+
+        
 class saved_data(models.Model):
-    id = models.CharField(unique=True, max_length=30, primary_key=True)
+    id = models.CharField(unique=True, max_length=40, primary_key=True)
     main_header = models.CharField(max_length=30)
     sub_header = models.CharField(max_length=30)
     info = models.TextField()
     gen_url = models.URLField()
 
+    class Meta:
+        db_table = 'saved_data' 
+
 class headers(models.Model):
-    main_header = models.CharField(max_length=30)
-    sub_header = models.CharField(max_length=30)
+    main_header = models.IntegerField()
+    sub_header = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'headers'
 
 class adminInfo(models.Model):
     username = models.CharField(max_length=30, primary_key=True)
     password = models.CharField(max_length=30)
 
-
-
-'''
-
-from django.db import models
-
-class Phase(models.Model): #Main Headers
-    phase_id = models.CharField(max_length=50, primary_key=True)
-    phase_name = models.CharField(max_length=50)
-    def __str__(self) -> str:
-        return self.phase_id + ": " + self.phase_name #displays phase id & name in database
-
-class subheading(models.Model):
-    subheading_id = models.CharField(max_length=50, primary_key=True)
-    subheading_name = models.CharField(max_length=50)
-    phase_id = models.ForeignKey(Phase,on_delete=models.DO_NOTHING)
-    def __str__(self) -> str:
-        return self.subheading_id + ": " + self.subheading_name
-
-class info(models.Model):
-    info_id = models.CharField(max_length=50, primary_key=True)
-    info_link = models.URLField()
-    info_text = models.CharField(max_length=5000)
-    updated = models.DateTimeField(auto_now=True) # timestamp of last time info was changed
-    subheading_id = models.ForeignKey(subheading,on_delete=models.CASCADE)
-    def __str__(self) -> str:
-        return self.subheading_id + ": " + self.info_id
-
-
-'''
+    class Meta:
+        db_table = 'adminInfo'

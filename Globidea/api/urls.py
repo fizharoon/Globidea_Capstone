@@ -1,10 +1,12 @@
 from django.urls import path
-from .views import scraped_data_view, saved_data_view, curator_url_view, header_view, admin_view
+from . import views
 
 urlpatterns = [
-    path('scrape_data', scraped_data_view.as_view()),
-    path('url_data', curator_url_view.as_view()),
-    path('saved_data', saved_data_view.as_view()),
-    path('header_view', header_view.as_view()),
-    path('admin_view', admin_view.as_view()),
+    path('', views.apiOverview, name='api-overview'),
+    path('scraped_data', views.scraped_data_view, name='scraped_data'),
+    path('saved_data', views.saved_data_view, name='saved_data'),
+    path('headers', views.header_view, name='headers'),
+    path('admin', views.adminInfo_view, name='admin'),
 ]
+
+

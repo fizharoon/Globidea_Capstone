@@ -5,7 +5,7 @@ const Curator_Page = () => {
             
         <div class="row">
             <div class="column">
-            <label for="insertlink">Insert Link:</label>
+            <label for="insertlink" id = "link">Insert Link:</label>
             <input type="text" id="link" name="link"></input>
             <button>Scrape Data</button>
             <br></br>
