@@ -34,13 +34,22 @@ input {
   border-radius: 10px;
 }
 
+
 button {
   border: none;
   background-color: white;
-  padding: 20px;
+  padding: 18px;
+  font-size: 12px; /* change font size */
   border-radius: 10px;
   cursor: pointer;
   color: #7439db;
+  margin-top: 1rem; /* add margin */
+}
+
+button.goBack {
+  padding: 18px; /* change button padding */
+  font-size: 12px; /* change font size */
+  width: 100%; /* set width */
 }
 
 .link-btn {
