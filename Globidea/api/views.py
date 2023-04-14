@@ -18,8 +18,9 @@ from rest_framework import authentication, permissions
 @api_view(['GET'])
 def apiOverview(request):
     api_urls = {
-        'scraped_data':'/scraped_data/', #GET
+        'scraped_data_view':'/scraped_data_view/', #GET
         'saved_data':'/saved_data/', #GET
+        'scraped_data_create':'/scraped_data_create/'
     }
     return JsonResponse(api_urls)
 
@@ -32,6 +33,13 @@ def scraped_data_view(request):
     serializer = scraped_data_serializer(scrape, many=True)
 
     #set safe=False so we can pass non-dict objects
+    return JsonResponse(serializer.data, safe=False)
+
+@api_view(['POST'])
+def scraped_data_create(request):
+    url = scraped_data.object.curator_url
+    scrape = scraped_data.objects.all()
+    serializer = scraped_data_serializer(scrape, many=True)
     return JsonResponse(serializer.data, safe=False)
     
 
