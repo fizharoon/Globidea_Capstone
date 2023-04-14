@@ -37,7 +37,33 @@ def scraped_data_view(request):
 
 @api_view(['POST'])
 def scraped_data_create(request):
-    url = scraped_data.object.curator_url
+
+    
+    # retrieve url
+    url = request.POST.get('url')
+
+    # validate url
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+    except (requests.exceptions.RequestException, ValueError):
+        return JsonResponse({'error': 'Invalid URL or unable to connect'}, status=400)
+
+    #scrape - find all <p> tags
+    soup = BeautifulSoup(response.content, 'html.parser')
+    p_tags = soup.find_all('p')
+    p_tags_text = [p.text for p in p_tags]
+
+    for text in p_tags_text:
+        newString = text.replace(" ","%20")
+        scraped_data.objects.create(
+            # id is auto generated in models
+            info=text,
+            curator_url=url,
+            gen_url= url + "#:~:text=" + newString
+        )
+        
+
     scrape = scraped_data.objects.all()
     serializer = scraped_data_serializer(scrape, many=True)
     return JsonResponse(serializer.data, safe=False)
@@ -60,7 +86,6 @@ def adminInfo_view(request):
     admin = adminInfo.objects.all()
     serializer = admin_serializer(admin, many=True)
     return JsonResponse(serializer.data, safe=False)
-
 
 
     

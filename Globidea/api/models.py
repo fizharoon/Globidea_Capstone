@@ -45,6 +45,9 @@ class headers(models.Model):
     class Meta:
         db_table = 'headers'
 
+    def __str__(self):
+        return str(self.main_header) + ": " + self.sub_header
+
 class adminInfo(models.Model):
     username = models.CharField(max_length=30, primary_key=True)
     password = models.CharField(max_length=30)
