@@ -73,7 +73,6 @@ class Curator_Page extends React.Component {
         console.log('subheading:', activeHeader)
     }
 
-    
 
     // when curator submits link
     handleCuratorInputLinkSubmit(e){
@@ -133,11 +132,11 @@ class Curator_Page extends React.Component {
                         Insert Link:
                     </label>
                     <input
-                        type="text"
-                        id="link"
-                        name="link"
+                        type="url"
+                        id="url"
+                        name="url"
                     ></input>
-                    <button type = 'submit' >Scrape Data</button>
+                    <button type = 'submit'>Scrape Data</button>
                 </form>
                 <br></br>
                 

@@ -37,7 +37,8 @@ def scraped_data_view(request):
 
 @api_view(['POST'])
 def scraped_data_create(request):
-
+    # drop all data
+    scraped_data.objects.all().delete()
     
     # retrieve url
     url = request.POST.get('url')
