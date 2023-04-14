@@ -22,6 +22,10 @@
     max-width: 600px;
     margin: 2rem auto;
   }
+
+  .accordion-item{
+    margin-bottom: 10px;
+  }
   
   .accordion-title {
     display: flex;
@@ -30,8 +34,7 @@
     cursor: pointer;
     background-color: darkred;
     color:white;
-
-    /*border-radius: 1 rem;*/
+    border-radius: 15px;
   }
   
   .accordion-title:hover {
@@ -44,7 +47,10 @@
   }
   
   .accordion-content {
-    background-color: #E2E6E6;
+    background-color: white;
+    overflow: hidden;
+    transition-duration: 3s;
+    transition-timing-function: ease-in-out;
   }
   
   .accordion-item{
