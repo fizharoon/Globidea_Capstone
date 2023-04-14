@@ -1,7 +1,13 @@
 from django.urls import path
-from .views import scraped_data_view, saved_data_view
+from . import views
 
 urlpatterns = [
-    path('scrape_data', scraped_data_view.as_view()),
-    path('saved_data', saved_data_view.as_view()),
+    path('', views.apiOverview, name='api-overview'),
+    path('scraped_data_view', views.scraped_data_view, name='scraped_data_view'),
+    path('scraped_data_create', views.scraped_data_create, name='scraped_data_create'),
+    path('saved_data', views.saved_data_view, name='saved_data'),
+    path('headers', views.header_view, name='headers'),
+    path('admin', views.adminInfo_view, name='admin'),
 ]
+
+
