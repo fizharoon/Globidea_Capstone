@@ -1,3 +1,4 @@
+import './curatorpage.css';
 const Curator_Page = () => {
     return (
         <div>
@@ -34,8 +35,8 @@ const Curator_Page = () => {
             <div class="column">
                 <table>
                     <tr>
-                        <th>Company</th>
-                        <th>Contact</th>
+                        <th></th>
+                        <th>Information</th>
                         <th>Country</th>
                     </tr>
                     <tr>
