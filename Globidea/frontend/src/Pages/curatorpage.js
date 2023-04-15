@@ -11,6 +11,7 @@ class Curator_Page extends React.Component {
         this.state = {
             scrape:[],
             header:[],
+            subHeadings:[],
             active:{
                 id:'',
                 curator_url:'',
@@ -20,15 +21,16 @@ class Curator_Page extends React.Component {
             },
             editing:false,
             selectedMainHeading:'',
+            selectedSubHeading:'',
         }
         this.fetchScrapedInfo = this.fetchScrapedInfo.bind(this)
         this.fetchHeaderInfo = this.fetchHeaderInfo.bind(this)
         this.handleMainHeadingSelect = this.handleMainHeadingSelect.bind(this)
-        // this.handleCuratorInputLink = this.handleCuratorInputLink.bind(this)
         this.handleCuratorInputLinkSubmit = this.handleCuratorInputLinkSubmit.bind(this)
+        this.handleSubHeadingSelect = this.handleSubHeadingSelect.bind(this)
     };
 
-    componentWillMount(){ //used to make API requests
+    componentWillMount(){ //used to make API requests - GET
         this.fetchScrapedInfo()
         this.fetchHeaderInfo()
 
@@ -61,6 +63,7 @@ class Curator_Page extends React.Component {
     handleMainHeadingSelect(e){
         const selectedMainHeading = e.target.value;
         const activeHeader = this.state.header.find(header => header.main_header === selectedMainHeading);
+        
         this.setState({
             active: {
                 ...this.state.active,
@@ -68,25 +71,42 @@ class Curator_Page extends React.Component {
                 sub_header: '',
             },
             selectedMainHeading,
-            subheadings: activeHeader?.sub_headers || [],
+            subHeadings: activeHeader?.filter(selectedMainHeading),
         });
-        console.log('subheading:', activeHeader)
+        console.log('sub options: ',this.subHeadings)
     }
+
+    handleSubHeadingSelect = (e) => {
+        const selectedSubHeading = e.target.value;
+        // const { selectedMainHeading, active, header } = this.state;
+      
+        // const subHeadingOptions = header
+        //   .find((phase) => phase.main_header === selectedMainHeading)
+        //   .sub_headers.filter(
+        //     (subheader) => subheader !== active.sub_header
+        //   );
+        //   console.log('active main from sub log: ', selectedMainHeading)
+        //   console.log('sub: ', selectedSubHeading)
+      
+        this.setState({
+          active: {
+            ...this.state.active,
+            sub_header: selectedSubHeading,
+            
+          },
+        });
+      };
 
 
     // when curator submits link
     handleCuratorInputLinkSubmit(e){
         e.preventDefault()
-        //console.log('ITEM: ', this.state.scrape.url)
         const form = e.target;
         const formData = new FormData(form);
 
         fetch('http://127.0.0.1:8000/api/scraped_data_create', {
             method: form.method,
             body: formData,
-            // headers: {
-            //     'Content-type':'application/json',
-            // }
         })
         .then(data => {
             console.log('Data:', data)
@@ -116,16 +136,17 @@ class Curator_Page extends React.Component {
             }
         });
 
-        const subheadings = phase.find(
-            (phase) => phase.main_header === selectedMainHeading
-          )?.sub_headers;
+        // Fix Later
+        // const subheadings = phase.find(
+        //     (phase) => phase.main_header === selectedMainHeading
+        //   )?.sub_headers;
 
         return (
           <div>
             <h1>Curator Page</h1>
 
-            <div class="row">
-              <div class="column">
+            <div className="row">
+              <div className="column">
                 {/* Form to send link to back-end */}
                 <form method="POST" onSubmit={this.handleCuratorInputLinkSubmit}>
                     <label for="curator_link" id="link">
@@ -158,27 +179,29 @@ class Curator_Page extends React.Component {
 
                 {/* Sub heading options differ depending on main heading selected */}
                 <br/>
-                <label htmlFor="sub-headers">Choose a Sub-Category:</label>
+                <label for="sub-headers">Choose a Sub-Category:</label>
                 <br/>
                 <select 
                     name="sub-headers" 
                     id="sub-headers"
                     value={active.sub_header}
-                    onChange={(e)=>this.setState({active: {...active, sub_header:e.target.value}})}
+                    onChange={this.handleSubHeadingSelect}
                 >
                     <option value="">--Select--</option>
-                    {subheadings?.map((subheading, index) => (
-                        <option key={index}  value={subheading}>
-                            {subheading}
+
+                    {/* Fix Later */}
+                    {/* { subheadings?.map((subHeader, index) => (
+                        <option key={index}  value={subHeader}>
+                            {subHeader}
                         </option>
-                ))}
+                ))} */}
                 </select>
                 <br/>
                 <button>Update</button>
               </div>
 
               {/* Display Data from scrape API Call */}
-              <div class="column">
+              <div className="column">
                 {create.map(function (scrape, id) {
                   return (
                     <div key={id} className="scrape-wrapper flex-wrapper">

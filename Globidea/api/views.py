@@ -21,7 +21,9 @@ def apiOverview(request):
         'scraped_data_view':'/scraped_data_view/', #GET
         'saved_data':'/saved_data/', #GET
         'scraped_data_create':'/scraped_data_create/',
-        'admin':'/admin/'
+        'admin':'/admin/',
+        'token':'/token',
+        'token/refresh':'/token/refresh'
     }
     return JsonResponse(api_urls)
 
@@ -57,19 +59,29 @@ def scraped_data_create(request):
     p_tags_text = [p.text for p in p_tags]
 
     for text in p_tags_text:
-        newString = text.replace(" ","%20")
+        if text == '':
+            continue
         scraped_data.objects.create(
             # id is auto generated in models
             info=text,
             curator_url=url,
-            gen_url= url + "#:~:text=" + newString
+            gen_url= genSourceURL(url, text)
         )
-        
-
     scrape = scraped_data.objects.all()
     serializer = scraped_data_serializer(scrape, many=True)
     return JsonResponse(serializer.data, safe=False)
-    
+
+def genSourceURL(url,text):
+    count = len(text.split())
+    if count>6:
+        first, last = text.split()[:3], text.split()[-3:]
+        newFirst, newLast = ' '.join(first), ' '.join(last)
+        modFirst, modLast = newFirst.replace(' ','%20'), newLast.replace(' ','%20')
+        link = url + '#:~:text=' + modFirst + ',' + modLast
+        return link
+    newText = text.replace(' ','%20')
+    link = url + '#:~:text=' + newText
+    return link
 
 @api_view(['GET'])
 def saved_data_view(request):
