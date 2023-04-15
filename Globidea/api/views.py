@@ -20,7 +20,8 @@ def apiOverview(request):
     api_urls = {
         'scraped_data_view':'/scraped_data_view/', #GET
         'saved_data':'/saved_data/', #GET
-        'scraped_data_create':'/scraped_data_create/'
+        'scraped_data_create':'/scraped_data_create/',
+        'admin':'/admin/'
     }
     return JsonResponse(api_urls)
 
@@ -88,6 +89,8 @@ def adminInfo_view(request):
     serializer = admin_serializer(admin, many=True)
     return JsonResponse(serializer.data, safe=False)
 
+# api_view(['POST'])
+# def login_view(request):
 
     
 # class scraped_data_view(generics.CreateAPIView): # returns to us all the scraped data
