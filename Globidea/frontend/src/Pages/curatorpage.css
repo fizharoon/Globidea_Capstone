@@ -22,3 +22,13 @@
   button{
     border: 1px solid black;
   }
+  .row{
+    margin: auto;
+  }
+
+  .flex-wrapper{
+    display: flex;
+  }
+  input{
+    border: 1px solid black;
+  }
