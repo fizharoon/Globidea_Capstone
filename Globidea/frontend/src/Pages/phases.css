@@ -3,11 +3,12 @@
     padding: 0;
     box-sizing: border-box;
   }
-  
+
   body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 20px;
     background: white;
+
   }
   
   h1 {
@@ -33,7 +34,8 @@
     justify-content: space-between;
     cursor: pointer;
     background-color: darkred;
-    color:white;
+    color: white;
+    /*border-radius: 1 rem;*/
     border-radius: 15px;
   }
   
@@ -44,6 +46,10 @@
   .accordion-title,
   .accordion-content {
     padding: 1rem;
+    background-color: darkred;
+  }
+  
+
   }
   
   .accordion-content {
@@ -57,12 +63,32 @@
     border-radius: 2px;
   }
 
+
   @media screen and (max-width: 700px) {
     body {
       font-size: 18px;
     }
   
     .accordion {
-      width: 90%;
+      width: 200%;
     }
   }
+
+  .timeline {
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    height: 500px; /* 设置高度 */
+  }
+  
+  .timeline-item {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  .timeline-item-content {
+    margin: 20px;
+  }
+
+  
