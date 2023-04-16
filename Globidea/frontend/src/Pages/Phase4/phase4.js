@@ -1,7 +1,7 @@
 import React from 'react';
 import Accordion from '../../Components/Accordion/Accordion';
 import { accordionContent } from './content';
-import './styles.css';
+import '../../Pages/phases.css';
 
 const Phase_4 = () => {
     return (

@@ -4,7 +4,6 @@
     box-sizing: border-box;
   }
 
-
   body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 20px;
@@ -24,6 +23,10 @@
     max-width: 600px;
     margin: 2rem auto;
   }
+
+  .accordion-item{
+    margin-bottom: 10px;
+  }
   
   .accordion-title {
     display: flex;
@@ -33,6 +36,7 @@
     background-color: darkred;
     color: white;
     /*border-radius: 1 rem;*/
+    border-radius: 15px;
   }
   
   .accordion-title:hover {
@@ -45,11 +49,21 @@
     background-color: darkred;
   }
   
-  .accordion-content {
-    background-color: #E2E6E6;
-    
+
   }
   
+  .accordion-content {
+    background-color: white;
+    overflow: hidden;
+    transition-duration: 3s;
+    transition-timing-function: ease-in-out;
+  }
+  
+  .accordion-item{
+    border-radius: 2px;
+  }
+
+
   @media screen and (max-width: 700px) {
     body {
       font-size: 18px;
