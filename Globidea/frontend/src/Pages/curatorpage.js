@@ -1,11 +1,7 @@
 import React from "react";
-
-
 import './curatorpage.css'
 
 class Curator_Page extends React.Component {
-
-
     constructor(props){
         super(props);
         this.state = {
@@ -25,15 +21,16 @@ class Curator_Page extends React.Component {
         }
         this.fetchScrapedInfo = this.fetchScrapedInfo.bind(this)
         this.fetchHeaderInfo = this.fetchHeaderInfo.bind(this)
-        this.handleMainHeadingSelect = this.handleMainHeadingSelect.bind(this)
-        this.handleCuratorInputLinkSubmit = this.handleCuratorInputLinkSubmit.bind(this)
-        this.handleSubHeadingSelect = this.handleSubHeadingSelect.bind(this)
+        this.handleMainHeadingSelect = this.handleMainHeadingSelect.bind(this) // Main Heading
+        this.handleCuratorInputLinkSubmit = this.handleCuratorInputLinkSubmit.bind(this) // Link Button
+        this.handleSubHeadingSelect = this.handleSubHeadingSelect.bind(this) // Sub Heading
+        //this.handleUpdateSubmit = this.handleUpdateSubmit.bind(this) // Update Button
+       //this.handleCheckboxSelect = this.handleCheckboxSelect.bind(this) // Checkbox
     };
 
     componentWillMount(){ //used to make API requests - GET
         this.fetchScrapedInfo()
         this.fetchHeaderInfo()
-
     }
 
     fetchScrapedInfo(){
@@ -59,7 +56,7 @@ class Curator_Page extends React.Component {
                 })
             )
     }
-
+    
     handleMainHeadingSelect(e){
         const selectedMainHeading = e.target.value;
         const activeHeader = this.state.header.find(header => header.main_header === selectedMainHeading);
@@ -73,30 +70,46 @@ class Curator_Page extends React.Component {
             selectedMainHeading,
             subHeadings: activeHeader?.filter(selectedMainHeading),
         });
-        console.log('sub options: ',this.subHeadings)
+        console.log('main heading: ',this.selectedMainHeading)
     }
 
-    handleSubHeadingSelect = (e) => {
-        const selectedSubHeading = e.target.value;
-        // const { selectedMainHeading, active, header } = this.state;
+    // handleSubHeadingSelect = (e) => {
+    //     const selectedSubHeading = e.target.value;
+    //     // const { selectedMainHeading, active, header } = this.state;
       
-        // const subHeadingOptions = header
-        //   .find((phase) => phase.main_header === selectedMainHeading)
-        //   .sub_headers.filter(
-        //     (subheader) => subheader !== active.sub_header
-        //   );
-        //   console.log('active main from sub log: ', selectedMainHeading)
-        //   console.log('sub: ', selectedSubHeading)
+    //     // const subHeadingOptions = header
+    //     //   .find((phase) => phase.main_header === selectedMainHeading)
+    //     //   .sub_headers.filter(
+    //     //     (subheader) => subheader !== active.sub_header
+    //     //   );
+    //     //   console.log('active main from sub log: ', selectedMainHeading)
+    //     //   console.log('sub: ', selectedSubHeading)
       
-        this.setState({
-          active: {
-            ...this.state.active,
-            sub_header: selectedSubHeading,
+    //     this.setState({
+    //       active: {
+    //         ...this.state.active,
+    //         sub_header: selectedSubHeading,
             
-          },
-        });
-      };
+            
+    //       },
+          
+    //     });
+    //     console.log('sub: ',this.selectedSubHeading)
+    //   };
 
+      handleSubHeadingSelect(e){
+        const selectedSubHeadings = Array.from(
+            e.target.selectedOptions,
+            option => option.value
+        );
+        this.setState({
+            active: {
+                ...this.state.active,
+                sub_header: selectedSubHeadings,
+            },
+            selectedSubHeadings,
+        });
+    }
 
     // when curator submits link
     handleCuratorInputLinkSubmit(e){
@@ -188,6 +201,8 @@ class Curator_Page extends React.Component {
                     onChange={this.handleSubHeadingSelect}
                 >
                     <option value="">--Select--</option>
+                    <option value="Application">Application</option>
+                    <option value="Orientation">Orientation</option>
 
                     {/* Fix Later */}
                     {/* { subheadings?.map((subHeader, index) => (

@@ -33,10 +33,13 @@ class saved_data(models.Model):
     main_header = models.CharField(max_length=30)
     sub_header = models.CharField(max_length=30)
     info = models.TextField()
+    curator_url = models.URLField(default='')
     gen_url = models.URLField()
 
     class Meta:
         db_table = 'saved_data' 
+    
+    
 
 class headers(models.Model):
     main_header = models.IntegerField()
