@@ -86,6 +86,15 @@ def genSourceURL(url,text):
 
 @api_view(['POST'])
 def saved_data_create(request):
+
+    # idea:
+    # Saved ID's from scraped_data table in a list "selected_checkboxes"
+    # and filter the scraped_data table to have only those ID entries
+    # store every left over entry in saved_data
+
+    # Warning: Due to cross referencing, this method is not efficient and requires more memory
+    # Future Plans: Save data to saved_data table directly instead of cross referencing
+
     # retrieve selected checkboxes, main header and subheader from request.POST
     # assuming we are storing selected information in a list
     selected_checkboxes = request.POST.getlist('selected_checkboxes[]')
@@ -93,10 +102,7 @@ def saved_data_create(request):
     sub_header = request.POST.get('sub_header')
     
     # https://docs.djangoproject.com/en/4.2/topics/db/queries/
-    # idea:
-    # Saved ID's from scraped_data table in a list "selected_checkboxes"
-    # and filter the scraped_data table to have only those ID entries
-    # store every left over entry in saved_data
+    # filter id's
     scraped_data_objs = scraped_data.objects.filter(id=selected_checkboxes)
 
     # create a new saved_data object for each selected checkbox
