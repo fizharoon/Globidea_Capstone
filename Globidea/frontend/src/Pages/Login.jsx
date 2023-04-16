@@ -41,7 +41,7 @@ export const Login = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email);
+        console.log(username);
     }
     const handleGoBack = () => {
       window.history.back();
