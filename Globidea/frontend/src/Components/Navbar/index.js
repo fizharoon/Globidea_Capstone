@@ -8,12 +8,13 @@ import {
     NavBtn,
     NavBtnLink,
 } from "./NavbarElements";
+import BlockU from "../../assets/BlockU.png";
 const Navbar = () => {
     return (
         <>
            <Nav>
             <NavLogo to="/">
-                Welcome
+            Welcome <img style={{ width: 80, height: 50 }} src={BlockU} alt="Logo" /> 
             </NavLogo>
             <Bars />
 

@@ -1,5 +1,6 @@
 import React from "react";
 import './curatorpage.css'
+// import Checkbox from "@mui/material/Checkbox";
 
 class Curator_Page extends React.Component {
     constructor(props){
@@ -155,9 +156,11 @@ class Curator_Page extends React.Component {
         //   )?.sub_headers;
 
         return (
+          // <div style={{backgroundColor: "pink"}}>
           <div>
-            <h1>Curator Page</h1>
-
+            <h2>Curator Page<br/></h2>
+            <button className="logout">Logout</button>
+            <br/>
             <div className="row">
               <div className="column">
                 {/* Form to send link to back-end */}
@@ -172,7 +175,7 @@ class Curator_Page extends React.Component {
                     ></input>
                     <button type = 'submit'>Scrape Data</button>
                 </form>
-                <br></br>
+                <br></br><br></br>
                 
                 {/* Select Main Phase */}
                 <label for="phases">Choose a Phase:</label>
@@ -181,9 +184,10 @@ class Curator_Page extends React.Component {
                   onChange={this.handleMainHeadingSelect}
                   value={selectedMainHeading}
                 >
+                  {/* Add a "--Select Phase--"in the table */}
                   {mainHeadings.map((mainHeader, index) => {
                     return (
-                      <option key={index} value={mainHeader}>
+                      <option key={index} value= {mainHeader}> 
                         {mainHeader}
                       </option>
                     );
@@ -193,14 +197,13 @@ class Curator_Page extends React.Component {
                 {/* Sub heading options differ depending on main heading selected */}
                 <br/>
                 <label for="sub-headers">Choose a Sub-Category:</label>
-                <br/>
                 <select 
                     name="sub-headers" 
                     id="sub-headers"
                     value={active.sub_header}
                     onChange={this.handleSubHeadingSelect}
                 >
-                    <option value="">--Select--</option>
+                    <option value="">--Select Category--</option>
                     <option value="Application">Application</option>
                     <option value="Orientation">Orientation</option>
 
@@ -213,10 +216,13 @@ class Curator_Page extends React.Component {
                 </select>
                 <br/>
                 <button>Update</button>
-              </div>
+                {/* <Checkbox/> */}
+            </div>
 
               {/* Display Data from scrape API Call */}
               <div className="column">
+                <th></th>
+                <th>Information</th>
                 {create.map(function (scrape, id) {
                   return (
                     <div key={id} className="scrape-wrapper flex-wrapper">

@@ -1,5 +1,5 @@
 import './App.css';
-
+// import React, {useState} from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Welcome from './Pages';
 import Phase1 from './Pages/Phase1/phase1';
@@ -13,7 +13,9 @@ import WithNav from './Components/WithNav';
 import CuratorPage from './Pages/curatorpage'
 
 function App() {
+  // const[color, changeColor] = useState("#ffffff")
   return (
+    // <div style {{backgroun}}>
     <BrowserRouter>
       <Routes>
         <Route element={<WithoutNav />}>
@@ -31,6 +33,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    // </div>
   );
 }
 
