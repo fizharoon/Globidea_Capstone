@@ -5,11 +5,14 @@
   }
 
   body {
+    
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 20px;
-    background: white;
+    min-height: 100vh;
+    background-color: #FFFFFF; 
 
   }
+  
   
   h1 {
     display: flex;
@@ -50,8 +53,6 @@
   }
   
 
-  
-  
   .accordion-content {
     background-color: white;
     overflow: hidden;
@@ -84,7 +85,7 @@
   .timeline-item {
     display: flex;
     align-items: center;
-    margin: 20px;
+    margin: -15px;   /*picture spacing*/
   }
   
   .timeline-item-content {
