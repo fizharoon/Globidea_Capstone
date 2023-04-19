@@ -42,7 +42,7 @@
     transition: opacity 0.5s ease;
   }
   .timeline-item:hover img::after {
-    opacity: 0.6;
+    opacity: 1;
   }
 
   .timeline-item-content h2 {
@@ -60,7 +60,7 @@
   }
   
   .timeline-item:hover img {
-    opacity: 1.0;
+    opacity: 0.5;
   }
   
   .timeline-item:hover .timeline-item-content h2 {
