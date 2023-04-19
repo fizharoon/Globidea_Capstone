@@ -1,6 +1,35 @@
 asgiref==3.6.0
-certifi @ file:///C:/b/abs_85o_6fm0se/croot/certifi_1671487778835/work/certifi
+beautifulsoup4 @ file:///home/conda/feedstock_root/build_artifacts/beautifulsoup4_1675252249248/work
+brotlipy @ file:///Users/runner/miniforge3/conda-bld/brotlipy_1666764738024/work
+certifi==2022.12.7
+cffi @ file:///Users/runner/miniforge3/conda-bld/cffi_1671179421243/work
+charset-normalizer @ file:///home/conda/feedstock_root/build_artifacts/charset-normalizer_1661170624537/work
+click @ file:///home/conda/feedstock_root/build_artifacts/click_1666798198223/work
+cryptography @ file:///Users/runner/miniforge3/conda-bld/cryptography-split_1675828723881/work
 Django==4.1.7
-sqlparse @ file:///C:/b/abs_83jn6owfpc/croot/sqlparse_1668793499314/work
-tzdata==2022.7
-wincertstore==0.2
+django-cors-headers==3.14.0
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.2.2
+Flask @ file:///home/conda/feedstock_root/build_artifacts/flask_1676592993069/work
+html5lib @ file:///home/conda/feedstock_root/build_artifacts/html5lib_1592930327044/work
+idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1663625384323/work
+importlib-metadata @ file:///home/conda/feedstock_root/build_artifacts/importlib-metadata_1672612343532/work
+itsdangerous @ file:///home/conda/feedstock_root/build_artifacts/itsdangerous_1648147185463/work
+Jinja2 @ file:///home/conda/feedstock_root/build_artifacts/jinja2_1654302431367/work
+lxml==4.9.2
+MarkupSafe @ file:///Users/runner/miniforge3/conda-bld/markupsafe_1674135867894/work
+pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1636257122734/work
+PyJWT==2.6.0
+pyOpenSSL @ file:///home/conda/feedstock_root/build_artifacts/pyopenssl_1672659226110/work
+PySocks @ file:///home/conda/feedstock_root/build_artifacts/pysocks_1661604839144/work
+pytz==2022.7.1
+requests @ file:///home/conda/feedstock_root/build_artifacts/requests_1673863902341/work
+Serializer==0.2.1
+simplejson==3.18.4
+six @ file:///home/conda/feedstock_root/build_artifacts/six_1620240208055/work
+soupsieve @ file:///home/conda/feedstock_root/build_artifacts/soupsieve_1658207591808/work
+sqlparse==0.4.3
+urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1673452138552/work
+webencodings==0.5.1
+Werkzeug @ file:///home/conda/feedstock_root/build_artifacts/werkzeug_1676411946679/work
+zipp @ file:///home/conda/feedstock_root/build_artifacts/zipp_1677313463193/work
