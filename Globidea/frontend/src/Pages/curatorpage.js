@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState}from "react";
 import './curatorpage.css'
 // import Checkbox from "@mui/material/Checkbox";
 
@@ -16,17 +16,25 @@ class Curator_Page extends React.Component {
                 main_header:'',
                 sub_header:'',
             },
+            isChecked:false,
             editing:false,
             selectedMainHeading:'',
             selectedSubHeading:'',
         }
+        // const [isChecked, setIsChecked] = useState(false);
+
+        // const handleCheckboxChange = (event) => {
+        //   setIsChecked(event.target.checked);
+        //   console.log('checkbox inside constructor')
+        // };
+        
         this.fetchScrapedInfo = this.fetchScrapedInfo.bind(this)
         this.fetchHeaderInfo = this.fetchHeaderInfo.bind(this)
         this.handleMainHeadingSelect = this.handleMainHeadingSelect.bind(this) // Main Heading
         this.handleCuratorInputLinkSubmit = this.handleCuratorInputLinkSubmit.bind(this) // Link Button
         this.handleSubHeadingSelect = this.handleSubHeadingSelect.bind(this) // Sub Heading
         //this.handleUpdateSubmit = this.handleUpdateSubmit.bind(this) // Update Button
-       //this.handleCheckboxSelect = this.handleCheckboxSelect.bind(this) // Checkbox
+        this.handleCheckbox = this.handleCheckbox.bind(this) // Checkbox
     };
 
     componentWillMount(){ //used to make API requests - GET
@@ -110,6 +118,14 @@ class Curator_Page extends React.Component {
             },
             selectedSubHeadings,
         });
+    }
+
+    handleCheckbox = (e) =>{
+      e.preventDefault()
+      // console.log(e.target.value)
+      console.log('test')
+      this.setState({ isChecked: e.target.checked });
+      
     }
 
     // when curator submits link
@@ -227,9 +243,12 @@ class Curator_Page extends React.Component {
                   return (
                     <div key={id} className="scrape-wrapper flex-wrapper">
                       <div style={{ flex: 1 }}>
-                        <input type="checkbox" />
+                        <input 
+                        type="checkbox" 
+                        onChange={()=>this.handleCheckbox}
+                        value={scrape.id}
+                        />
                       </div>
-
                       <div style={{ flex: 7 }}>
                         <span>{scrape.info}</span>
                       </div>

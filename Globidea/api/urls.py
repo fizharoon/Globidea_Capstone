@@ -10,5 +10,3 @@ urlpatterns = [
     path('headers', views.header_view, name='headers'),
     path('admin', views.adminInfo_view, name='admin'),
 ]
-
-
