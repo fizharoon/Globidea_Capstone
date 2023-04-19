@@ -20,8 +20,9 @@ from rest_framework import authentication, permissions
 def apiOverview(request):
     api_urls = {
         'scraped_data_view':'/scraped_data_view/', #GET
-        'saved_data':'/saved_data/', #GET
         'scraped_data_create':'/scraped_data_create/',
+        'saved_data_view':'/saved_data_view/', #GET
+        'saved_data_create':'/saved_data_create/', #POST
         'admin':'/admin/',
         'token':'/token',
         'token/refresh':'/token/refresh'

@@ -26,8 +26,6 @@ class scraped_data(models.Model):
         # therefore this is to set a custom table name
         # to match with the class name
         db_table = 'scraped_data'
-
-
         
 class saved_data(models.Model):
     id = models.CharField(unique=True, max_length=40, primary_key=True)
@@ -42,8 +40,6 @@ class saved_data(models.Model):
     class Meta:
         db_table = 'saved_data' 
     
-    
-
 class headers(models.Model):
     main_header = models.IntegerField()
     sub_header = models.CharField(max_length=100)
