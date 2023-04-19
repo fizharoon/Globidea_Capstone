@@ -42,9 +42,9 @@ const Home = () => {
           </div>
         </Link>
       </div>
-      <button>
+      {/* <button>
         <Link to="/adminsignin">Admin signin</Link>
-      </button>
+      </button> */}
     </div>
   );
 };
