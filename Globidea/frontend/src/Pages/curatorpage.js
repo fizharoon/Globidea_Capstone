@@ -120,7 +120,7 @@ class Curator_Page extends React.Component {
         });
     }
 
-    handleCheckbox = (e) =>{
+    handleCheckbox = (e) => {
       e.preventDefault()
       // console.log(e.target.value)
       console.log('test')
@@ -239,13 +239,13 @@ class Curator_Page extends React.Component {
               <div className="column">
                 <th></th>
                 <th>Information</th>
-                {create.map(function (scrape, id) {
+                {create.map( (scrape, id) => {
                   return (
                     <div key={id} className="scrape-wrapper flex-wrapper">
                       <div style={{ flex: 1 }}>
                         <input 
                         type="checkbox" 
-                        onChange={()=>this.handleCheckbox}
+                        onChange={this.handleCheckbox }
                         value={scrape.id}
                         />
                       </div>
