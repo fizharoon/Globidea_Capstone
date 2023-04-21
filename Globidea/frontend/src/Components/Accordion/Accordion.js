@@ -28,7 +28,7 @@ const Accordion = ({title, content, url}) => {
                 <div>{isActive ? '-' : '+'}</div>
             </div>
             <div className="accordion-content" style={contentStyle} ref={handleContent}>{content}
-                <p><a href={url}>Learn More</a></p>
+                <p><a href={url} target="_blank">Learn More</a></p>
             </div>
         </div>
     );
