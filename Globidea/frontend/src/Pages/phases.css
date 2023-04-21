@@ -55,7 +55,7 @@
   
 
   .accordion-content {
-    background-color: white;
+    background-color: transparent;
     overflow: hidden;
     transition-duration: 3s;
     transition-timing-function: ease-in-out;
