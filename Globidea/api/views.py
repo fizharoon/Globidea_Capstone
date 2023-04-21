@@ -24,8 +24,6 @@ def apiOverview(request):
         'saved_data_view':'/saved_data_view/', #GET
         'saved_data_create':'/saved_data_create/', #POST
         'admin':'/admin/',
-        'token':'/token',
-        'token/refresh':'/token/refresh'
     }
     return JsonResponse(api_urls)
 
@@ -98,7 +96,7 @@ def saved_data_create(request):
 
     # retrieve selected checkboxes, main header and subheader from request.POST
     # assuming we are storing selected information in a list
-    selected_checkboxes = request.POST.getlist('selected_checkboxes[]')
+    selected_checkboxes = request.POST.getlist('checkedIds[]')
     main_header = request.POST.get('main_header')
     sub_header = request.POST.get('sub_header')
     

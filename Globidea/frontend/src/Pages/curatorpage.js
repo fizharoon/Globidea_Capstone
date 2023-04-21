@@ -9,6 +9,7 @@ class Curator_Page extends React.Component {
             scrape:[],
             header:[],
             subHeadings:[],
+            checkedIds:[],
             active:{
                 id:'',
                 curator_url:'',
@@ -21,20 +22,15 @@ class Curator_Page extends React.Component {
             selectedMainHeading:'',
             selectedSubHeading:'',
         }
-        // const [isChecked, setIsChecked] = useState(false);
-
-        // const handleCheckboxChange = (event) => {
-        //   setIsChecked(event.target.checked);
-        //   console.log('checkbox inside constructor')
-        // };
+        
         
         this.fetchScrapedInfo = this.fetchScrapedInfo.bind(this)
         this.fetchHeaderInfo = this.fetchHeaderInfo.bind(this)
         this.handleMainHeadingSelect = this.handleMainHeadingSelect.bind(this) // Main Heading
         this.handleCuratorInputLinkSubmit = this.handleCuratorInputLinkSubmit.bind(this) // Link Button
         this.handleSubHeadingSelect = this.handleSubHeadingSelect.bind(this) // Sub Heading
-        //this.handleUpdateSubmit = this.handleUpdateSubmit.bind(this) // Update Button
         this.handleCheckbox = this.handleCheckbox.bind(this) // Checkbox
+        this.handleUpdate = this.handleUpdate.bind(this)
     };
 
     componentWillMount(){ //used to make API requests - GET
@@ -79,52 +75,75 @@ class Curator_Page extends React.Component {
             selectedMainHeading,
             subHeadings: activeHeader?.filter(selectedMainHeading),
         });
-        console.log('main heading: ',this.selectedMainHeading)
+        console.log('main heading: ', selectedMainHeading)
     }
 
-    // handleSubHeadingSelect = (e) => {
-    //     const selectedSubHeading = e.target.value;
-    //     // const { selectedMainHeading, active, header } = this.state;
-      
-    //     // const subHeadingOptions = header
-    //     //   .find((phase) => phase.main_header === selectedMainHeading)
-    //     //   .sub_headers.filter(
-    //     //     (subheader) => subheader !== active.sub_header
-    //     //   );
-    //     //   console.log('active main from sub log: ', selectedMainHeading)
-    //     //   console.log('sub: ', selectedSubHeading)
-      
-    //     this.setState({
-    //       active: {
-    //         ...this.state.active,
-    //         sub_header: selectedSubHeading,
-            
-            
-    //       },
-          
-    //     });
-    //     console.log('sub: ',this.selectedSubHeading)
-    //   };
+    handleUpdate = (e) => {
+      e.preventDefault();
+      const { checkedIds, selectedMainHeading, selectedSubHeading } = this.state;
+  
+      fetch('http://127.0.0.1:8000/api/saved_data_create', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              checkedIds,
+              main_heading: selectedMainHeading,
+              sub_heading: selectedSubHeading
+          })
+      })
+      .then(response => {
+          if(!response.ok){
+              throw new Error('Network response was not ok')
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log('Data:', data);
+      })
+      .catch((error) => {
+          console.log("Error:", error);
+      });
+      console.log('ids: ', checkedIds)
+      console.log('main: ', selectedMainHeading)
+      console.log('sub: ',selectedSubHeading)
 
-      handleSubHeadingSelect(e){
-        const selectedSubHeadings = Array.from(
-            e.target.selectedOptions,
-            option => option.value
-        );
-        this.setState({
-            active: {
-                ...this.state.active,
-                sub_header: selectedSubHeadings,
-            },
-            selectedSubHeadings,
-        });
+  }
+  
+    handleSubHeadingSelect(e){
+      const selectedSubHeadings = Array.from(
+          e.target.selectedOptions,
+          option => option.value
+      );
+      this.setState({
+          active: {
+              ...this.state.active,
+              sub_header: selectedSubHeadings,
+          },
+          selectedSubHeadings,
+      });
+      console.log('sub heading: ',selectedSubHeadings)
     }
 
     handleCheckbox = (e) => {
       e.preventDefault()
       // console.log(e.target.value)
-      console.log('test')
-      this.setState({ isChecked: e.target.checked });
+      const id = e.target.value;
+      const isChecked = e.target.checked;
+      // set array length to active length of checked ID's
+      let checkedIds = [...this.state.checkedIds];
+
+      if (isChecked) {
+        checkedIds.push(id);
+      } else {
+        checkedIds = checkedIds.filter((checkedId) => checkedId !== id);
+      }
+
+      this.setState({ 
+        checkedIds,
+      });
+      console.log('list of ids: ', checkedIds)
       
     }
 
@@ -194,6 +213,8 @@ class Curator_Page extends React.Component {
                 <br></br><br></br>
                 
                 {/* Select Main Phase */}
+                <form id="updateSubmit" onChange={this.handleUpdate}>
+
                 <label for="phases">Choose a Phase:</label>
                 <select
                   name="main-headers"
@@ -231,8 +252,10 @@ class Curator_Page extends React.Component {
                 ))} */}
                 </select>
                 <br/>
-                <button>Update</button>
-                {/* <Checkbox/> */}
+                <button type='submit'>Update</button>
+
+                </form>
+                
             </div>
 
               {/* Display Data from scrape API Call */}
