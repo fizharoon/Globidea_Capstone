@@ -95,20 +95,22 @@ def saved_data_create(request):
     # Warning: Due to cross referencing, this method is not efficient and requires more memory
     # Future Plans: Save data to saved_data table directly instead of cross referencing
 
-    data = request.body
-    data_dict = json.load(data.decode("utf-8"))
+    # data = request.body
+    # data_dict = json.load(data.decode("utf-8"))
 
-    print('body: ', data_dict)
+    # print('body: ', data_dict)
 
     # retrieve selected checkboxes, main header and subheader from request.POST
     # assuming we are storing selected information in a list
-    selected_checkboxes = request.body.get('ids')
-    main_header = request.body.get('main_header')
-    sub_header = request.body.get('sub_header')
+
+    data = json.loads(request.body)
+    selected_checkboxes = data.get('ids[]')
+    main_header = data.get('main_header')
+    sub_header = data.get('sub_header')
     
     # https://docs.djangoproject.com/en/4.2/topics/db/queries/
     # filter id's
-    scraped_data_objs = scraped_data.objects.filter(id__in=selected_checkboxes)
+    scraped_data_objs = scraped_data.objects.filter(id=selected_checkboxes)
 
     # create a new saved_data object for each selected checkbox
     for obj in scraped_data_objs:
@@ -123,8 +125,8 @@ def saved_data_create(request):
     # serialize data
     data = saved_data.objects.all()
     serializer = saved_data_serializer(data, many=True)
-    print(scraped_data_objs, selected_checkboxes)
-    print("Post request" , request.body)
+    # print(scraped_data_objs, selected_checkboxes)
+    # print("Post request" , request.body)
     return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])

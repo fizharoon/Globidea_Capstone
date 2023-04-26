@@ -105,9 +105,6 @@ class Curator_Page extends React.Component {
     handleUpdate = (e) => {
       e.preventDefault();
       const { checkedIds, selectedMainHeading, selectedSubHeading } = this.state;
-
-      const form = e.target
-      const formData = new FormData(form)
   
       fetch('http://127.0.0.1:8000/api/saved_data_create', {
           method: "POST",
