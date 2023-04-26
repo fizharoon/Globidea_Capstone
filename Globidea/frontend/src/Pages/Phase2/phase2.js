@@ -6,7 +6,7 @@ import '../../Pages/phases.css';
 const Phase_2 = () => {
     return (
         <div>
-           <h1>Contact Us</h1> 
+           <h1>Getting Started</h1> 
            <div className="accordion">
                 {accordionContent.map(({title, content}) => (<Accordion title={title} content={content} />))}
             </div>

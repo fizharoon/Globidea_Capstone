@@ -1,30 +1,45 @@
-import React from "react";
-import './curatorpage.js'
+import React, {useState}from "react";
+import './curatorpage.css'
+// import Checkbox from "@mui/material/Checkbox";
 
 class Curator_Page extends React.Component {
-
-
     constructor(props){
         super(props);
         this.state = {
             scrape:[],
+            header:[],
+            subHeadings:[],
+            checkedIds:[],
             active:{
                 id:'',
-                url:'',
+                curator_url:'',
                 info:'',
+                main_header:'',
+                sub_header:'',
             },
+            isChecked:false,
             editing:false,
+            selectedMainHeading:'',
+            selectedSubHeading:'',
         }
-        this.fetchInfo = this.fetchInfo.bind(this)
+        
+        
+        this.fetchScrapedInfo = this.fetchScrapedInfo.bind(this)
+        this.fetchHeaderInfo = this.fetchHeaderInfo.bind(this)
+        this.handleMainHeadingSelect = this.handleMainHeadingSelect.bind(this) // Main Heading
+        this.handleCuratorInputLinkSubmit = this.handleCuratorInputLinkSubmit.bind(this) // Link Button
+        this.handleSubHeadingSelect = this.handleSubHeadingSelect.bind(this) // Sub Heading
+        this.handleCheckbox = this.handleCheckbox.bind(this) // Checkbox
+        this.handleUpdate = this.handleUpdate.bind(this)
     };
 
-    componentWillMount(){ //used to make API requests
-        this.fetchInfo()
-
+    componentWillMount(){ //used to make API requests - GET
+        this.fetchScrapedInfo()
+        this.fetchHeaderInfo()
     }
 
-    fetchInfo(){
-        console.log('Fetching...')
+    fetchScrapedInfo(){
+        console.log('Fetching Scraped Info...')
         // Must white list this link in django settings
         // and include CORS headers
         fetch('http://127.0.0.1:8000/api/scraped_data_view')
@@ -36,130 +51,237 @@ class Curator_Page extends React.Component {
             )
     }
 
+    fetchHeaderInfo(){
+        console.log('Fetching Header Info...')
+        fetch('http://127.0.0.1:8000/api/headers')
+        .then(response => response.json())
+        .then(data =>
+                this.setState({
+                    header:data
+                })
+            )
+    }
+    
+    handleMainHeadingSelect(e){
+        const selectedMainHeading = e.target.value;
+        const activeHeader = this.state.header.find(header => header.main_header === selectedMainHeading);
+        
+        this.setState({
+            active: {
+                ...this.state.active,
+                main_header: selectedMainHeading,
+                sub_header: '',
+            },
+            selectedMainHeading,
+            subHeadings: activeHeader?.filter(selectedMainHeading),
+        });
+        console.log('main heading: ', selectedMainHeading)
+    }
+
+    handleUpdate = (e) => {
+      e.preventDefault();
+      const { checkedIds, selectedMainHeading, selectedSubHeading } = this.state;
+  
+      fetch('http://127.0.0.1:8000/api/saved_data_create', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              checkedIds,
+              main_heading: selectedMainHeading,
+              sub_heading: selectedSubHeading
+          })
+      })
+      .then(response => {
+          if(!response.ok){
+              throw new Error('Network response was not ok')
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log('Data:', data);
+      })
+      .catch((error) => {
+          console.log("Error:", error);
+      });
+      console.log('ids: ', checkedIds)
+      console.log('main: ', selectedMainHeading)
+      console.log('sub: ',selectedSubHeading)
+
+  }
+  
+    handleSubHeadingSelect(e){
+      const selectedSubHeadings = Array.from(
+          e.target.selectedOptions,
+          option => option.value
+      );
+      this.setState({
+          active: {
+              ...this.state.active,
+              sub_header: selectedSubHeadings,
+          },
+          selectedSubHeadings,
+      });
+      console.log('sub heading: ',selectedSubHeadings)
+    }
+
+    handleCheckbox = (e) => {
+      e.preventDefault()
+      // console.log(e.target.value)
+      const id = e.target.value;
+      const isChecked = e.target.checked;
+      // set array length to active length of checked ID's
+      let checkedIds = [...this.state.checkedIds];
+
+      if (isChecked) {
+        checkedIds.push(id);
+      } else {
+        checkedIds = checkedIds.filter((checkedId) => checkedId !== id);
+      }
+
+      this.setState({ 
+        checkedIds,
+      });
+      console.log('list of ids: ', checkedIds)
+      
+    }
+
+    // when curator submits link
+    handleCuratorInputLinkSubmit(e){
+        e.preventDefault()
+        const form = e.target;
+        const formData = new FormData(form);
+
+        fetch('http://127.0.0.1:8000/api/scraped_data_create', {
+            method: form.method,
+            body: formData,
+        })
+        .then(data => {
+            console.log('Data:', data)
+        })
+        .then(response => {
+            if(!response.ok){
+                throw new Error('Network response was not ok')
+            }
+            return response.json();
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        });
+    }
+
     render(){
 
-        var create = this.state.scrape
+        var create = this.state.scrape;
+        var phase = this.state.header;
+        var {selectedMainHeading, active} = this.state;
+
+        var mainHeadings = [];
+        phase.forEach((header) => {
+            if (mainHeadings.indexOf(header.main_header) === -1) {
+                // if main header is not found in array, push
+                mainHeadings.push(header.main_header);
+            }
+        });
+
+        // Fix Later
+        // const subheadings = phase.find(
+        //     (phase) => phase.main_header === selectedMainHeading
+        //   )?.sub_headers;
 
         return (
-            <div>
-                <h1>Curator Page</h1>
+          // <div style={{backgroundColor: "pink"}}>
+          <div>
+            <h2>Curator Page<br/></h2>
+            <button className="logout">Logout</button>
+            <br/>
+            <div className="row">
+              <div className="column">
+                {/* Form to send link to back-end */}
+                <form method="POST" onSubmit={this.handleCuratorInputLinkSubmit}>
+                    <label for="curator_link" id="link">
+                        Insert Link:
+                    </label>
+                    <input
+                        type="url"
+                        id="url"
+                        name="url"
+                    ></input>
+                    <button type = 'submit'>Scrape Data</button>
+                </form>
+                <br></br><br></br>
                 
-            <div class="row">
-                <div class="column">
-                <label for="insertlink" id = "link">Insert Link:</label>
-                <input type="text" id="link" name="link"></input>
-                <button>Scrape Data</button>
-                <br></br>
-                {/* with the button click make a call the scrape_date func */}
-                <button></button> 
-                    <label for="phases">Choose a Phase:</label>
-                    <select name="phases" id="phases">
-                        {/* Might need to change value for phases to numbers only 1-5 */}
-                        <option value="Phase_1">Phase 1</option>
-                        <option value="Phase_2">Phase 2</option>
-                        <option value="Phase_3">Phase 3</option>
-                        <option value="Phase_4">Phase 4</option>
-                        <option value="Phase_5">Phase 5</option>
-                    </select>
-                    <br></br>
-                    <label for="subcat">Choose a Sub-Category:</label>
-                    <br></br>
-                    {/* Preferably would like to auto update the subheadings according to 
-                    what main heading/phase was chosen first
-                    
-                    idea: hide the subheading dropdown and when a value is selected for main heading
-                    then the subheading dropdown could appear with the updated values/options*/}
-                    <select name="subcat" id="subcat">
-                        <option value="application">Phase 1 - Application</option>
-                        <option value="orientation">Phase 1 - Orientation</option>
-                        <option value="something">Phase 1 - Something</option>
-                        <option value="smth">Phase 4</option>
-                        <option value="else">Phase 5</option>
-                    </select>
-                    <br></br>
-                    <button>Update</button>
-                </div>
-                <div class="column">
-                    {create.map(function(scrape, id){
-                        return(
-                            <div key={id} className="scrape-wrapper flex-wrapper">
-                                <span>{scrape.info}</span>
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
+                {/* Select Main Phase */}
+                <form id="updateSubmit" onChange={this.handleUpdate}>
+
+                <label for="phases">Choose a Phase:</label>
+                <select
+                  name="main-headers"
+                  onChange={this.handleMainHeadingSelect}
+                  value={selectedMainHeading}
+                >
+                  {/* Add a "--Select Phase--"in the table */}
+                  {mainHeadings.map((mainHeader, index) => {
+                    return (
+                      <option key={index} value= {mainHeader}> 
+                        {mainHeader}
+                      </option>
+                    );
+                  })}
+                </select>
+
+                {/* Sub heading options differ depending on main heading selected */}
+                <br/>
+                <label for="sub-headers">Choose a Sub-Category:</label>
+                <select 
+                    name="sub-headers" 
+                    id="sub-headers"
+                    value={active.sub_header}
+                    onChange={this.handleSubHeadingSelect}
+                >
+                    <option value="">--Select Category--</option>
+                    <option value="Application">Application</option>
+                    <option value="Orientation">Orientation</option>
+
+                    {/* Fix Later */}
+                    {/* { subheadings?.map((subHeader, index) => (
+                        <option key={index}  value={subHeader}>
+                            {subHeader}
+                        </option>
+                ))} */}
+                </select>
+                <br/>
+                <button type='submit'>Update</button>
+
+                </form>
+                
             </div>
 
-    )}
+              {/* Display Data from scrape API Call */}
+              <div className="column">
+                <th></th>
+                <th>Information</th>
+                {create.map( (scrape, id) => {
+                  return (
+                    <div key={id} className="scrape-wrapper flex-wrapper">
+                      <div style={{ flex: 1 }}>
+                        <input 
+                        type="checkbox" 
+                        onChange={this.handleCheckbox }
+                        value={scrape.id}
+                        />
+                      </div>
+                      <div style={{ flex: 7 }}>
+                        <span>{scrape.info}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        );}
 };
-
-
-// const Curator_Page = () => {
-
-    
-//     return (
-//         <div>
-//             <h1>Curator Page</h1>
-            
-//         <div class="row">
-//             <div class="column">
-//             <label for="insertlink" id = "link">Insert Link:</label>
-//             <input type="text" id="link" name="link"></input>
-//             <button>Scrape Data</button>
-//             <br></br>
-//             {/* with the button click make a call the scrape_date func */}
-//             <button></button> 
-//                 <label for="phases">Choose a Phase:</label>
-//                 <select name="phases" id="phases">
-//                     {/* Might need to change value for phases to numbers only 1-5 */}
-//                     <option value="Phase_1">Phase 1</option>
-//                     <option value="Phase_2">Phase 2</option>
-//                     <option value="Phase_3">Phase 3</option>
-//                     <option value="Phase_4">Phase 4</option>
-//                     <option value="Phase_5">Phase 5</option>
-//                 </select>
-//                 <br></br>
-//                 <label for="subcat">Choose a Sub-Category:</label>
-//                 <br></br>
-//                 {/* Preferably would like to auto update the subheadings according to 
-//                 what main heading/phase was chosen first
-                
-//                 idea: hide the subheading dropdown and when a value is selected for main heading
-//                 then the subheading dropdown could appear with the updated values/options*/}
-//                 <select name="subcat" id="subcat">
-//                     <option value="application">Phase 1 - Application</option>
-//                     <option value="orientation">Phase 1 - Orientation</option>
-//                     <option value="something">Phase 1 - Something</option>
-//                     <option value="smth">Phase 4</option>
-//                     <option value="else">Phase 5</option>
-//                 </select>
-//                 <br></br>
-//                 <button>Update</button>
-//             </div>
-//             <div class="column">
-//                 <table>
-//                     {/* heading values would stay hardcoded */}
-//                     <tr>
-//                         <th>Company</th>
-//                         <th>Contact</th>
-//                         <th>Country</th>
-//                     </tr>
-//                     <tr>
-//                         <td>Alfreds Futterkiste</td>
-//                         <td>Maria Anders</td>
-//                         <td>Germany</td>
-//                     </tr>
-//                     <tr>
-//                         <td>Centro comercial Moctezuma</td>
-//                         <td>Francisco Chang</td>
-//                         <td>Mexico</td>
-//                     </tr>
-//                 </table>
-//             </div>
-//         </div>
-//         </div>
-//     );
-// };
 
 export default Curator_Page;

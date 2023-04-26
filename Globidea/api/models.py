@@ -19,25 +19,27 @@ class scraped_data(models.Model):
     info = models.TextField()
     curator_url = models.URLField()
     gen_url = models.URLField()
-
+    def __str__(self):
+        return self.info
     class Meta:
         # Django APi prefixes table names with api_"....""
         # therefore this is to set a custom table name
         # to match with the class name
         db_table = 'scraped_data'
-
-
         
 class saved_data(models.Model):
     id = models.CharField(unique=True, max_length=40, primary_key=True)
     main_header = models.CharField(max_length=30)
     sub_header = models.CharField(max_length=30)
     info = models.TextField()
+    curator_url = models.URLField(default='')
     gen_url = models.URLField()
 
+    def __str__(self):
+        return self.info
     class Meta:
         db_table = 'saved_data' 
-
+    
 class headers(models.Model):
     main_header = models.IntegerField()
     sub_header = models.CharField(max_length=100)
@@ -45,9 +47,13 @@ class headers(models.Model):
     class Meta:
         db_table = 'headers'
 
+    def __str__(self):
+        return str(self.main_header) + ": " + self.sub_header
+
 class adminInfo(models.Model):
     username = models.CharField(max_length=30, primary_key=True)
     password = models.CharField(max_length=30)
-
+    def __str__(self):
+        return self.username
     class Meta:
         db_table = 'adminInfo'

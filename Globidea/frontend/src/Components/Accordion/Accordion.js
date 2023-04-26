@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-const Accordion = ({title, content}) => {
+const Accordion = ({title, content, url}) => {
     const [isActive, setIsActive] = useState(false);
     const [contentHeight, setContentHeight] = useState(0);
 
@@ -27,7 +27,9 @@ const Accordion = ({title, content}) => {
                 <div>{title}</div>
                 <div>{isActive ? '-' : '+'}</div>
             </div>
-            <div className="accordion-content" style={contentStyle} ref={handleContent}>{content}</div>
+            <div className="accordion-content" style={contentStyle} ref={handleContent}>{content}
+                <p><a href={url} target="_blank">Learn More</a></p>
+            </div>
         </div>
     );
 };

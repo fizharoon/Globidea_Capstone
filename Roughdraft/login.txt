@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './Login.css';
+import './Login.css'
 
 const login_api = async (username, password, success, fail) => {
   const response = await fetch(
@@ -39,18 +39,18 @@ export const Login = (props) => {
     window.location = "/";
   };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(username);
-    }
-    const handleGoBack = () => {
-      window.history.back();
-    };
+  const tryLogin = async (e) => {
+    e.preventDefault();
+    console.log("Logging in with", username, password);
+    await login_api(username, password, success, (text) => {
+      console.log(text);
+    });
+  };
 
-    return (
-      <div className="auth-form-container">
-      <h3>Login</h3>
-      <form className="login-form" onSubmit={handleSubmit}>
+  return (
+    <div className="auth-form-container">
+      <h2>Login</h2>
+      <form className="login-form" onSubmit={tryLogin}>
         <label htmlFor="username">Username</label>
         <input
           value={username}
@@ -71,8 +71,6 @@ export const Login = (props) => {
         />
         <button type="submit">Log In</button>
       </form>
-            <button className="goBack" onClick={handleGoBack}>Go Back</button>
-
-        </div>
-    )
-}
+    </div>
+  );
+};

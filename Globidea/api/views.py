@@ -15,12 +15,15 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions
 
 
+
 @api_view(['GET'])
 def apiOverview(request):
     api_urls = {
         'scraped_data_view':'/scraped_data_view/', #GET
-        'saved_data':'/saved_data/', #GET
-        'scraped_data_create':'/scraped_data_create/'
+        'scraped_data_create':'/scraped_data_create/',
+        'saved_data_view':'/saved_data_view/', #GET
+        'saved_data_create':'/saved_data_create/', #POST
+        'admin':'/admin/',
     }
     return JsonResponse(api_urls)
 
@@ -37,11 +40,84 @@ def scraped_data_view(request):
 
 @api_view(['POST'])
 def scraped_data_create(request):
-    url = scraped_data.object.curator_url
+    # drop all data
+    scraped_data.objects.all().delete()
+    
+    # retrieve url
+    url = request.POST.get('url')
+
+    # validate url
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+    except (requests.exceptions.RequestException, ValueError):
+        return JsonResponse({'error': 'Invalid URL or unable to connect'}, status=400)
+
+    #scrape - find all <p> tags
+    soup = BeautifulSoup(response.content, 'html.parser')
+    p_tags = soup.find_all('p')
+    p_tags_text = [p.text for p in p_tags]
+
+    for text in p_tags_text:
+        if text == '':
+            continue
+        scraped_data.objects.create(
+            # id is auto generated in models
+            info=text,
+            curator_url=url,
+            gen_url= genSourceURL(url, text)
+        )
     scrape = scraped_data.objects.all()
     serializer = scraped_data_serializer(scrape, many=True)
     return JsonResponse(serializer.data, safe=False)
+
+def genSourceURL(url,text):
+    count = len(text.split())
+    if count>6:
+        first, last = text.split()[:3], text.split()[-3:]
+        newFirst, newLast = ' '.join(first), ' '.join(last)
+        modFirst, modLast = newFirst.replace(' ','%20'), newLast.replace(' ','%20')
+        link = url + '#:~:text=' + modFirst + ',' + modLast
+        return link
+    newText = text.replace(' ','%20')
+    link = url + '#:~:text=' + newText
+    return link
+
+@api_view(['POST'])
+def saved_data_create(request):
+
+    # idea:
+    # Saved ID's from scraped_data table in a list "selected_checkboxes"
+    # and filter the scraped_data table to have only those ID entries
+    # store every left over entry in saved_data
+
+    # Warning: Due to cross referencing, this method is not efficient and requires more memory
+    # Future Plans: Save data to saved_data table directly instead of cross referencing
+
+    # retrieve selected checkboxes, main header and subheader from request.POST
+    # assuming we are storing selected information in a list
+    selected_checkboxes = request.POST.getlist('checkedIds[]')
+    main_header = request.POST.get('main_header')
+    sub_header = request.POST.get('sub_header')
     
+    # https://docs.djangoproject.com/en/4.2/topics/db/queries/
+    # filter id's
+    scraped_data_objs = scraped_data.objects.filter(id=selected_checkboxes)
+
+    # create a new saved_data object for each selected checkbox
+    for obj in scraped_data_objs:
+        saved_data.objects.create(
+            info=obj.info,
+            curator_url=obj.curator_url,
+            gen_url=obj.gen_url,
+            main_header=main_header,
+            sub_header=sub_header
+        )
+
+    # serialize data
+    data = saved_data.objects.all()
+    serializer = saved_data_serializer(data, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])
 def saved_data_view(request):
@@ -60,79 +136,3 @@ def adminInfo_view(request):
     admin = adminInfo.objects.all()
     serializer = admin_serializer(admin, many=True)
     return JsonResponse(serializer.data, safe=False)
-
-
-
-    
-# class scraped_data_view(generics.CreateAPIView): # returns to us all the scraped data
-#     # Changing CreateAPIView to ListAPIView simply lists the information
-#     # http://127.0.0.1:8000/api/scrape
-#     queryset = scraped_data.objects.all()
-#     serializer_class = scraped_data_serializer
-
-# class curator_url_view(generics.CreateAPIView): # retrieve URL --> POST request
-#     serializer_class = get_curator_url_serializer
-
-#     def post(self, request, format=None):
-#         serializer = self.serializer_class(data = request.data)
-#         if serializer.is_valid():
-#              curator_url = serializer.data.curator_url
-
-# class saved_data_view(generics.CreateAPIView):
-#     queryset = saved_data.objects.all()
-#     serializer_class = saved_data_serializer
-
-# class header_view(generics.CreateAPIView):
-#     queryset = headers
-#     serializer_class = header_serializer
-
-# class admin_view(generics.CreateAPIView):
-#     queryset = adminInfo
-#     serializer_class = admin_serializer
-
-
-
-
-
-
-# @api_view(['POST'])
-# def scrape_data_func(request):
-#     if request.method == 'POST':
-#         url = request.POST.get('url')
-#         response = requests.get(url)
-#         soup = BeautifulSoup(response.text, 'html.parser')
-#         p_tags = [p.text for p in soup.find_all('p')]
-#         return JsonResponse({'p_tags': p_tags})
-
-
-
-
-'''
-
-def link_gen():
-    # will be used to custom make the link for long strings or short strings
-    updated_info <-- regex (/\s+/g, "%20")
-
-
-@api_view(['POST'])
-def scrape(requests, user-url):
-    # delete all data in scraped_data table
-    scraped_data.objects.all().delete()
-    url = user-url #link
-    response = requests.get(url) # response to url
-    soup = BeautifulSoup(response.content, "html.parser") #parse
-    
-    for i in soup.find_all("p"): # for every <p> scraped we assign a unique anchor ID
-        info = p.get_text()
-        # if info is > 6 words, create special link, (first 3 words, last 3 words)
-        # pass string to link_gen() func
-        # store entry
-        # return
-        gen_url --> call link_gen() func
-        # store entry - p.get_text() --> info, gen_url --> gen-url
-
-def store(requests):
-    # store all attributes associated with saved_data model
-
-
-'''

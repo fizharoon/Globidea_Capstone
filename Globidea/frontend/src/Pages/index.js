@@ -42,9 +42,6 @@ const Home = () => {
           </div>
         </Link>
       </div>
-      {/* <button>
-        <Link to="/adminsignin">Admin signin</Link>
-      </button> */}
     </div>
   );
 };
