@@ -9,12 +9,12 @@ class Phase_1 extends React.Component{
       scrape:[],
       header:[],
       subHeadings:[],
-      active:{
-        id:'',
-        curator_url:'',
+      // application: [],
+      // orientation: [],
+      subsection:{
+        subHeadings:'',
         info:'',
-        main_header:'',
-        sub_header:'',
+        url:'',
       },
     }
   };
@@ -29,41 +29,55 @@ class Phase_1 extends React.Component{
     // and include CORS headers
     fetch('http://127.0.0.1:8000/api/saved_data_view')
     .then(response => response.json())
-    .then(data => 
+    .then(data => {
         this.setState({
             scrape:data
         })
-        )
+    })
   }
 
   render(){
     var info = this.state.scrape;
+    var subHeadings = {};
 
-    var subHeadings = [];
-        info.forEach((scrape) => {
-            if (subHeadings.indexOf(scrape.sub_header) === -1) {
-                // if main header is not found in array, push
-                subHeadings.push(scrape.sub_header);
-            }
-        });
+    // info.forEach((scrape) => {
+    //   if (subHeadings.indexOf(scrape.sub_header) === -1) {
+    //     // if main header is not found in array, push
+    //     subHeadings.push(scrape.sub_header);
+    //   }
+
+    // });
+    info.forEach((scrape) => {
+      if (!subHeadings[scrape.sub_header]) {
+        subHeadings[scrape.sub_header] = [scrape.info];
+      } else {
+        subHeadings[scrape.sub_header].push(scrape.info);
+      }
+    });
 
     return(
       <div>
         <h1>Planning to Attend</h1>
         {/* {subHeadings.map((subHeader, id) => {
           return (
-            <div key={id} className="accordion">
-              <Accordion title={subHeader} />
-            </div>
+            <div key ={id} className="accordion">
+                <Accordion title={subHeader.sub_header} content={scrape.info} url={scrape.gen_url}/>
+              </div>
           )
           })} */}
-          {info.map((scrape, id) => {
+        
+          {/* {info.map((scrape, id) => {
             return (
               <div key ={id} className="accordion">
                 <Accordion title={scrape.sub_header} content={scrape.info} url={scrape.gen_url}/>
               </div>
             )
-          })}
+          })} */}
+        {Object.entries(subHeadings).map(([subHeader, infoArray], id) => (
+        <div key={id} className="accordion">
+          <Accordion title={subHeader} content={infoArray.join('\n\n')} url={infoArray[0].gen_url}/>
+        </div>
+      ))}
       </div>
     )
   }
