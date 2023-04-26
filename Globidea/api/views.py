@@ -96,7 +96,7 @@ def saved_data_create(request):
 
     # retrieve selected checkboxes, main header and subheader from request.POST
     # assuming we are storing selected information in a list
-    selected_checkboxes = request.POST.getlist('checkedIds[]')
+    selected_checkboxes = request.POST.getlist('ids[]')
     main_header = request.POST.get('main_header')
     sub_header = request.POST.get('sub_header')
     

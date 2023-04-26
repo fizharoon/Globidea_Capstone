@@ -23,14 +23,13 @@ class Curator_Page extends React.Component {
             selectedSubHeading:'',
         }
         
-        
-        this.fetchScrapedInfo = this.fetchScrapedInfo.bind(this)
-        this.fetchHeaderInfo = this.fetchHeaderInfo.bind(this)
+        this.fetchScrapedInfo = this.fetchScrapedInfo.bind(this) // Fetch Scraped Info
+        this.fetchHeaderInfo = this.fetchHeaderInfo.bind(this) // Fetch Header Info
         this.handleMainHeadingSelect = this.handleMainHeadingSelect.bind(this) // Main Heading
         this.handleCuratorInputLinkSubmit = this.handleCuratorInputLinkSubmit.bind(this) // Link Button
         this.handleSubHeadingSelect = this.handleSubHeadingSelect.bind(this) // Sub Heading
         this.handleCheckbox = this.handleCheckbox.bind(this) // Checkbox
-        this.handleUpdate = this.handleUpdate.bind(this)
+        this.handleUpdate = this.handleUpdate.bind(this) // Update Button
     };
 
     componentWillMount(){ //used to make API requests - GET
@@ -78,21 +77,42 @@ class Curator_Page extends React.Component {
         console.log('main heading: ', selectedMainHeading)
     }
 
+      // when curator submits link
+    handleCuratorInputLinkSubmit(e){
+        e.preventDefault()
+        const form = e.target;
+        const formData = new FormData(form);
+
+        fetch('http://127.0.0.1:8000/api/scraped_data_create', {
+            method: form.method,
+            body: formData,
+        })
+        .then(data => {
+            console.log('Data:', data)
+        })
+        .then(response => {
+            if(!response.ok){
+                throw new Error('Network response was not ok')
+            }
+            return response.json();
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        });
+        console.log(formData)
+    }
+
     handleUpdate = (e) => {
       e.preventDefault();
       const { checkedIds, selectedMainHeading, selectedSubHeading } = this.state;
+
+      const form = e.target
+      const formData = new FormData(form)
   
       fetch('http://127.0.0.1:8000/api/saved_data_create', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-              checkedIds,
-              main_heading: selectedMainHeading,
-              sub_heading: selectedSubHeading
-          })
-      })
+          method: form.method,
+          body: formData,
+        })
       .then(response => {
           if(!response.ok){
               throw new Error('Network response was not ok')
@@ -147,30 +167,6 @@ class Curator_Page extends React.Component {
       
     }
 
-    // when curator submits link
-    handleCuratorInputLinkSubmit(e){
-        e.preventDefault()
-        const form = e.target;
-        const formData = new FormData(form);
-
-        fetch('http://127.0.0.1:8000/api/scraped_data_create', {
-            method: form.method,
-            body: formData,
-        })
-        .then(data => {
-            console.log('Data:', data)
-        })
-        .then(response => {
-            if(!response.ok){
-                throw new Error('Network response was not ok')
-            }
-            return response.json();
-        })
-        .catch((error) => {
-          console.log("Error:", error);
-        });
-    }
-
     render(){
 
         var create = this.state.scrape;
@@ -213,7 +209,8 @@ class Curator_Page extends React.Component {
                 <br></br><br></br>
                 
                 {/* Select Main Phase */}
-                <form id="updateSubmit" onChange={this.handleUpdate}>
+                {/* Update Submit Form */}
+                
 
                 <label for="phases">Choose a Phase:</label>
                 <select
@@ -252,8 +249,8 @@ class Curator_Page extends React.Component {
                 ))} */}
                 </select>
                 <br/>
+                <form method="POST" id="updateSubmit" onChange={this.handleUpdate}>
                 <button type='submit'>Update</button>
-
                 </form>
                 
             </div>
