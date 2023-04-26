@@ -4,6 +4,7 @@ import requests
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.http import JsonResponse
+import json
 
 
 from .serializers import scraped_data_serializer, saved_data_serializer, header_serializer, admin_serializer
@@ -94,15 +95,20 @@ def saved_data_create(request):
     # Warning: Due to cross referencing, this method is not efficient and requires more memory
     # Future Plans: Save data to saved_data table directly instead of cross referencing
 
+    data = request.body
+    data_dict = json.load(data.decode("utf-8"))
+
+    print('body: ', data_dict)
+
     # retrieve selected checkboxes, main header and subheader from request.POST
     # assuming we are storing selected information in a list
-    selected_checkboxes = request.POST.getlist('ids[]')
-    main_header = request.POST.get('main_header')
-    sub_header = request.POST.get('sub_header')
+    selected_checkboxes = request.body.get('ids')
+    main_header = request.body.get('main_header')
+    sub_header = request.body.get('sub_header')
     
     # https://docs.djangoproject.com/en/4.2/topics/db/queries/
     # filter id's
-    scraped_data_objs = scraped_data.objects.filter(id=selected_checkboxes)
+    scraped_data_objs = scraped_data.objects.filter(id__in=selected_checkboxes)
 
     # create a new saved_data object for each selected checkbox
     for obj in scraped_data_objs:
@@ -117,6 +123,8 @@ def saved_data_create(request):
     # serialize data
     data = saved_data.objects.all()
     serializer = saved_data_serializer(data, many=True)
+    print(scraped_data_objs, selected_checkboxes)
+    print("Post request" , request.body)
     return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])

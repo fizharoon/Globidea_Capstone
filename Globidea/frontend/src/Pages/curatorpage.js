@@ -110,8 +110,16 @@ class Curator_Page extends React.Component {
       const formData = new FormData(form)
   
       fetch('http://127.0.0.1:8000/api/saved_data_create', {
-          method: form.method,
-          body: formData,
+          method: "POST",
+          headers: {
+            'Accept': 'application/json',
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ids: checkedIds,
+            main_header: selectedMainHeading,
+            sub_header: selectedSubHeading
+          }),
         })
       .then(response => {
           if(!response.ok){
@@ -249,7 +257,7 @@ class Curator_Page extends React.Component {
                 ))} */}
                 </select>
                 <br/>
-                <form method="POST" id="updateSubmit" onChange={this.handleUpdate}>
+                <form id="updateSubmit" onSubmit={this.handleUpdate}>
                 <button type='submit'>Update</button>
                 </form>
                 
@@ -257,8 +265,7 @@ class Curator_Page extends React.Component {
 
               {/* Display Data from scrape API Call */}
               <div className="column">
-                <th></th>
-                <th>Information</th>
+                
                 {create.map( (scrape, id) => {
                   return (
                     <div key={id} className="scrape-wrapper flex-wrapper">
