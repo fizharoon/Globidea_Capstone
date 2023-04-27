@@ -1,6 +1,7 @@
 import React, {useState}from "react";
 import './curatorpage.css'
 // import Checkbox from "@mui/material/Checkbox";
+import { Link } from "react-router-dom";
 
 class Curator_Page extends React.Component {
     constructor(props){
@@ -195,7 +196,8 @@ class Curator_Page extends React.Component {
           // <div style={{backgroundColor: "pink"}}>
           <div>
             <h2>Curator Page<br/></h2>
-            <button className="logout">Logout</button>
+
+            <Link to="/"><button className="logout">Logout</button></Link>
             <br/>
             <div className="row">
               <div className="column">
