@@ -8,7 +8,7 @@ class Curator_Page extends React.Component {
         this.state = {
             scrape:[],
             header:[],
-            subHeadings:[],
+            // subHeadings:[],
             checkedIds:[],
             active:{
                 id:'',
@@ -63,16 +63,18 @@ class Curator_Page extends React.Component {
     
     handleMainHeadingSelect(e){
         const selectedMainHeading = e.target.value;
-        const activeHeader = this.state.header.find(header => header.main_header === selectedMainHeading);
+        const selectedSubHeading = this.state.selectedSubHeading;
+        //const activeHeader = this.state.header.find(header => header.main_header === selectedMainHeading);
         
         this.setState({
             active: {
                 ...this.state.active,
                 main_header: selectedMainHeading,
-                sub_header: '',
+                sub_header: selectedSubHeading,
             },
             selectedMainHeading,
-            subHeadings: activeHeader?.filter(selectedMainHeading),
+            selectedSubHeading,
+            // sub_header: activeHeader?.filter(header => header.main_header === selectedMainHeading),
         });
         console.log('main heading: ', selectedMainHeading)
     }
@@ -115,7 +117,7 @@ class Curator_Page extends React.Component {
           body: JSON.stringify({
             ids: checkedIds,
             main_header: selectedMainHeading,
-            sub_header: selectedSubHeading
+            sub_header: selectedSubHeading,
           }),
         })
       .then(response => {
@@ -132,23 +134,24 @@ class Curator_Page extends React.Component {
       });
       console.log('ids: ', checkedIds)
       console.log('main: ', selectedMainHeading)
-      console.log('sub: ',selectedSubHeading)
-
+      console.log('sub: ', selectedSubHeading)
   }
   
     handleSubHeadingSelect(e){
-      const selectedSubHeadings = Array.from(
-          e.target.selectedOptions,
-          option => option.value
-      );
-      this.setState({
-          active: {
-              ...this.state.active,
-              sub_header: selectedSubHeadings,
-          },
-          selectedSubHeadings,
-      });
-      console.log('sub heading: ',selectedSubHeadings)
+
+      const selectedMainHeading = this.state.selectedMainHeading;
+      const selectedSubHeading = e.target.value;
+        
+        this.setState({
+            active: {
+                ...this.state.active,
+                main_header: selectedMainHeading,
+                sub_header: selectedSubHeading,
+            },
+            selectedMainHeading,
+            selectedSubHeading,
+        });
+        console.log('sub: ', selectedSubHeading)
     }
 
     handleCheckbox = (e) => {
@@ -223,6 +226,7 @@ class Curator_Page extends React.Component {
                   onChange={this.handleMainHeadingSelect}
                   value={selectedMainHeading}
                 >
+                  <option value='' >--Select Category--</option>
                   {/* Add a "--Select Phase--"in the table */}
                   {mainHeadings.map((mainHeader, index) => {
                     return (
@@ -235,7 +239,7 @@ class Curator_Page extends React.Component {
 
                 {/* Sub heading options differ depending on main heading selected */}
                 <br/>
-                <label for="sub-headers">Choose a Sub-Category:</label>
+                <label for="sub-headers">Choose a Sub-Heading:</label>
                 <select 
                     name="sub-headers" 
                     id="sub-headers"
