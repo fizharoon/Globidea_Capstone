@@ -104,28 +104,35 @@ def saved_data_create(request):
     # assuming we are storing selected information in a list
 
     data = json.loads(request.body)
-    selected_checkboxes = data.get('ids[]')
+    selected_checkboxes = data.get('ids')
     main_header = data.get('main_header')
     sub_header = data.get('sub_header')
+
+    print(selected_checkboxes)
+    print(main_header)
+    print(sub_header)
     
     # https://docs.djangoproject.com/en/4.2/topics/db/queries/
     # filter id's
-    scraped_data_objs = scraped_data.objects.filter(id=selected_checkboxes)
+
+    scraped_data_objs = [scraped_data.objects.filter(id=selected_checkboxes)]
+    print(scraped_data_objs)
 
     # create a new saved_data object for each selected checkbox
     for obj in scraped_data_objs:
         saved_data.objects.create(
-            info=obj.info,
-            curator_url=obj.curator_url,
-            gen_url=obj.gen_url,
+            # id=obj.id,
+            info=scraped_data.info,
+            curator_url=scraped_data.curator_url,
+            gen_url=scraped_data.gen_url,
             main_header=main_header,
             sub_header=sub_header
         )
-
+        
     # serialize data
     data = saved_data.objects.all()
     serializer = saved_data_serializer(data, many=True)
-    # print(scraped_data_objs, selected_checkboxes)
+    print(scraped_data_objs)
     # print("Post request" , request.body)
     return JsonResponse(serializer.data, safe=False)
 
