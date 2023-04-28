@@ -66,40 +66,12 @@ def saved_data_create(request):
 
     data = json.loads(request.body)
     selected_checkboxes = data.get('ids')
-    tuple_checkboxes = tuple(selected_checkboxes)
-    print(tuple_checkboxes)
     main_header = data.get('main_header')
     sub_header = data.get('sub_header')
 
-    print(selected_checkboxes)
-    print(main_header)
-    print(sub_header)
-    
-    # https://docs.djangoproject.com/en/4.2/topics/db/queries/
-    # filter id's
-
-    firstID = 'id'
-    obj = scraped_data.objects.first()
-    id_obj = scraped_data._meta.get_field(firstID)
-    id_value = getattr(obj, firstID)
-
-    print('firstID: ',firstID)
-    print('obj: ',obj)
-    print('id_obj: ',id_obj)
-    print('id_value: ',id_value)
-
-#     field_name = 'name'
-# obj = MyModel.objects.first()
-# field_value = getattr(obj, field_name)
-    # mydata = Member.objects.filter(firstname='Emil').values()
     for i in selected_checkboxes:
         count=0
-        print('i: ',i)
         scraped_data_objs = scraped_data.objects.filter(id=i).values()
-        print('info: ', scraped_data_objs[count]['info'])  
-        print('curator url', scraped_data_objs[count]['curator_url'])  
-        print('gen_url', scraped_data_objs[count]['gen_url'])
-        
         saved_data.objects.create(
             id=i,
             info=scraped_data_objs[count]['info'],
@@ -110,17 +82,11 @@ def saved_data_create(request):
 
         )
         count+=1
-        print('scraped_data_obs: ', scraped_data_objs)
-        
-
-    #scraped_data_objs = scraped_data.objects.filter(id_value).values()
-    print('scraped_data_objs: ',scraped_data_objs)
         
     # serialize data
     data = saved_data.objects.all()
     serializer = saved_data_serializer(data, many=True)
-    # print(scraped_data_objs)
-    # print("Post request" , request.body)
+
     return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])
