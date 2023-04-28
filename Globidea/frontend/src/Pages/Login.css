@@ -45,6 +45,8 @@ button {
   cursor: pointer;
   color: #7439db;
   margin-top: 1rem; /* add margin */
+  /* top:50%; */
+  width: 100%;
 }
 
 button.goBack {
