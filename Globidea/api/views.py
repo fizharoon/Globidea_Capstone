@@ -16,29 +16,6 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions
 
 
-
-@api_view(['GET'])
-def apiOverview(request):
-    api_urls = {
-        'scraped_data_view':'/scraped_data_view/', #GET
-        'scraped_data_create':'/scraped_data_create/',
-        'saved_data_view':'/saved_data_view/', #GET
-        'saved_data_create':'/saved_data_create/', #POST
-        'admin':'/admin/',
-    }
-    return JsonResponse(api_urls)
-
-@api_view(['GET'])
-def scraped_data_view(request):
-    scrape = scraped_data.objects.all()
-
-    #many=True since we want to view all data
-    # set many=False and provide primary key/id to view individual data
-    serializer = scraped_data_serializer(scrape, many=True)
-
-    #set safe=False so we can pass non-dict objects
-    return JsonResponse(serializer.data, safe=False)
-
 @api_view(['POST'])
 def scraped_data_create(request):
     # drop all data
@@ -87,24 +64,10 @@ def genSourceURL(url,text):
 @api_view(['POST'])
 def saved_data_create(request):
 
-    # idea:
-    # Saved ID's from scraped_data table in a list "selected_checkboxes"
-    # and filter the scraped_data table to have only those ID entries
-    # store every left over entry in saved_data
-
-    # Warning: Due to cross referencing, this method is not efficient and requires more memory
-    # Future Plans: Save data to saved_data table directly instead of cross referencing
-
-    # data = request.body
-    # data_dict = json.load(data.decode("utf-8"))
-
-    # print('body: ', data_dict)
-
-    # retrieve selected checkboxes, main header and subheader from request.POST
-    # assuming we are storing selected information in a list
-
     data = json.loads(request.body)
     selected_checkboxes = data.get('ids')
+    tuple_checkboxes = tuple(selected_checkboxes)
+    print(tuple_checkboxes)
     main_header = data.get('main_header')
     sub_header = data.get('sub_header')
 
@@ -115,26 +78,73 @@ def saved_data_create(request):
     # https://docs.djangoproject.com/en/4.2/topics/db/queries/
     # filter id's
 
-    scraped_data_objs = [scraped_data.objects.filter(id=selected_checkboxes)]
-    print(scraped_data_objs)
+    firstID = 'id'
+    obj = scraped_data.objects.first()
+    id_obj = scraped_data._meta.get_field(firstID)
+    id_value = getattr(obj, firstID)
 
-    # create a new saved_data object for each selected checkbox
-    for obj in scraped_data_objs:
+    print('firstID: ',firstID)
+    print('obj: ',obj)
+    print('id_obj: ',id_obj)
+    print('id_value: ',id_value)
+
+#     field_name = 'name'
+# obj = MyModel.objects.first()
+# field_value = getattr(obj, field_name)
+    # mydata = Member.objects.filter(firstname='Emil').values()
+    for i in selected_checkboxes:
+        count=0
+        print('i: ',i)
+        scraped_data_objs = scraped_data.objects.filter(id=i).values()
+        print('info: ', scraped_data_objs[count]['info'])  
+        print('curator url', scraped_data_objs[count]['curator_url'])  
+        print('gen_url', scraped_data_objs[count]['gen_url'])
+        
         saved_data.objects.create(
-            # id=obj.id,
-            info=scraped_data.info,
-            curator_url=scraped_data.curator_url,
-            gen_url=scraped_data.gen_url,
+            id=i,
+            info=scraped_data_objs[count]['info'],
+            curator_url=scraped_data_objs[count]['curator_url'],
+            gen_url=scraped_data_objs[count]['gen_url'],
             main_header=main_header,
             sub_header=sub_header
+
         )
+        count+=1
+        print('scraped_data_obs: ', scraped_data_objs)
+        
+
+    #scraped_data_objs = scraped_data.objects.filter(id_value).values()
+    print('scraped_data_objs: ',scraped_data_objs)
         
     # serialize data
     data = saved_data.objects.all()
     serializer = saved_data_serializer(data, many=True)
-    print(scraped_data_objs)
+    # print(scraped_data_objs)
     # print("Post request" , request.body)
     return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def apiOverview(request):
+    api_urls = {
+        'scraped_data_view':'/scraped_data_view/', #GET
+        'scraped_data_create':'/scraped_data_create/',
+        'saved_data_view':'/saved_data_view/', #GET
+        'saved_data_create':'/saved_data_create/', #POST
+        'admin':'/admin/',
+    }
+    return JsonResponse(api_urls)
+
+@api_view(['GET'])
+def scraped_data_view(request):
+    scrape = scraped_data.objects.all()
+
+    #many=True since we want to view all data
+    # set many=False and provide primary key/id to view individual data
+    serializer = scraped_data_serializer(scrape, many=True)
+
+    #set safe=False so we can pass non-dict objects
+    return JsonResponse(serializer.data, safe=False)
+
 
 @api_view(['GET'])
 def saved_data_view(request):
