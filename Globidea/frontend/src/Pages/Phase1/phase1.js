@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Accordion from '../../Components/Accordion/Accordion';
+import AccordionContent from '../../Components/Accordion/AccordionContent';
 import '../../Pages/phases.css';
 
 class Phase_1 extends React.Component{
@@ -9,17 +10,14 @@ class Phase_1 extends React.Component{
       scrape:[],
       header:[],
       subHeadings:[],
-      // application: [],
-      // orientation: [],
-      subsection:{
-        subHeadings:'',
-        info:'',
-        url:'',
-      },
+      application:[],
+      orientation:[],
+      isActive: false,
+      contentHeight: 0
     }
   };
 
-  componentWillMount(){
+  componentDidMount(){
     this.fetchScrapedInfo()
   }
 
@@ -36,49 +34,80 @@ class Phase_1 extends React.Component{
     })
   }
 
+  toggleAccordion = () => {
+    this.setState({
+      isActive: !this.state.isActive,
+      contentHeight: this.state.contentHeight === 0 ? this.contentDiv.scrollHeight : 0
+    });
+  };
+
   render(){
     var info = this.state.scrape;
-    var subHeadings = {};
 
-    // info.forEach((scrape) => {
-    //   if (subHeadings.indexOf(scrape.sub_header) === -1) {
-    //     // if main header is not found in array, push
-    //     subHeadings.push(scrape.sub_header);
-    //   }
+    var subHeadings = [];
+        info.forEach((scrape) => {
+            if (subHeadings.indexOf(scrape.sub_header) === -1) {
+                // if main header is not found in array, push
+                subHeadings.push(scrape.sub_header);
+            }
+        });
 
-    // });
+    var application = [];
+    var orientation =[];
     info.forEach((scrape) => {
-      if (!subHeadings[scrape.sub_header]) {
-        subHeadings[scrape.sub_header] = [scrape.info];
-      } else {
-        subHeadings[scrape.sub_header].push(scrape.info);
+      if(scrape.sub_header === 'Application'){
+        application.push(scrape.info);
+        //application.push(scrape.gen_url);
       }
-    });
+      else if(scrape.sub_header === 'Orientation'){
+        orientation.push(scrape.info);
+      }
+    })
+
+    const contentStyle = {
+      maxHeight: this.state.isActive ? '200px' : 0,
+      display: this.state.isActive ? 'block' : 'none',
+      overflow: 'hidden',
+      transition: 'maxHeight 0.5s ease-in-out, display 0.5s ease-in-out',
+  }
 
     return(
       <div>
         <h1>Planning to Attend</h1>
-        {/* {subHeadings.map((subHeader, id) => {
-          return (
-            <div key ={id} className="accordion">
-                <Accordion title={subHeader.sub_header} content={scrape.info} url={scrape.gen_url}/>
-              </div>
-          )
-          })} */}
-        
-          {/* {info.map((scrape, id) => {
-            return (
-              <div key ={id} className="accordion">
-                <Accordion title={scrape.sub_header} content={scrape.info} url={scrape.gen_url}/>
-              </div>
+
+        <div className="accordion">
+          <Accordion title='Applicaton' />
+          {/* <div className="accordion-title" onClick={this.toggleAccordion}>
+            <div>Application</div>
+            <div>{this.state.isActive ? '-' : '+'}</div>
+          </div> */}
+          {application.map((content, id) => {
+            return(
+              <AccordionContent content={content} />
+            // <div key={id} className="accordion-content" style={contentStyle} ref={(div) => { this.contentDiv = div; }}>
+            //   <li>{content}</li>
+            //   {/* <p><a href={url} target="_blank">Learn More</a></p> */}
+            // </div>
+            )})}
+        </div>        
+        <div className='accordion'>
+        <Accordion title='Orientation' />
+        {/* <div className="accordion-title" onClick={this.toggleAccordion}>
+            <div>Orientation</div>
+            <div>{this.state.isActive ? '-' : '+'}</div>
+        </div> */}
+          {orientation.map((content, id) => {
+            return(
+              <AccordionContent content={content} />
+            // <div key={id} className="accordion-content" style={contentStyle} ref={(div) => { this.contentDiv = div; }}>
+            //   <li>{content}</li>
+            //   {/* <p><a href={url} target="_blank">Learn More</a></p> */}
+            // </div>
             )
-          })} */}
-        {Object.entries(subHeadings).map(([subHeader, infoArray], id) => (
-        <div key={id} className="accordion">
-          <Accordion title={subHeader} content={infoArray.join('\n\n')} url={infoArray[0].gen_url}/>
+          })}
         </div>
-      ))}
-      </div>
+        </div>
+
     )
   }
 }

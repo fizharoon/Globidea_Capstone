@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import AccordionContent from './AccordionContent';
 
-const Accordion = ({title, content, url}) => {
+// const Accordion = ({title, content, url}) => {
+const Accordion = ({title}) => {
     const [isActive, setIsActive] = useState(false);
     const [contentHeight, setContentHeight] = useState(0);
 
@@ -28,11 +28,10 @@ const Accordion = ({title, content, url}) => {
                 <div>{title}</div>
                 <div>{isActive ? '-' : '+'}</div>
             </div>
-            {/* <AccordionContent content={content} url={url} style={contentStyle} ref={handleContent} /> */}
-            <div className="accordion-content" style={contentStyle} ref={handleContent}>
+            {/* <div className="accordion-content" style={contentStyle} ref={handleContent}>
                 <li>{content}</li>
                 <p><a href={url} target="_blank">Learn More</a></p>
-            </div>
+            </div> */}
         </div>
     );
 };
