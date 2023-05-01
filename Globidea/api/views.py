@@ -4,6 +4,7 @@ import requests
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.http import JsonResponse
+import json
 
 
 from .serializers import scraped_data_serializer, saved_data_serializer, header_serializer, admin_serializer
@@ -14,29 +15,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
 
-
-
-@api_view(['GET'])
-def apiOverview(request):
-    api_urls = {
-        'scraped_data_view':'/scraped_data_view/', #GET
-        'scraped_data_create':'/scraped_data_create/',
-        'saved_data_view':'/saved_data_view/', #GET
-        'saved_data_create':'/saved_data_create/', #POST
-        'admin':'/admin/',
-    }
-    return JsonResponse(api_urls)
-
-@api_view(['GET'])
-def scraped_data_view(request):
-    scrape = scraped_data.objects.all()
-
-    #many=True since we want to view all data
-    # set many=False and provide primary key/id to view individual data
-    serializer = scraped_data_serializer(scrape, many=True)
-
-    #set safe=False so we can pass non-dict objects
-    return JsonResponse(serializer.data, safe=False)
 
 @api_view(['POST'])
 def scraped_data_create(request):
@@ -86,38 +64,53 @@ def genSourceURL(url,text):
 @api_view(['POST'])
 def saved_data_create(request):
 
-    # idea:
-    # Saved ID's from scraped_data table in a list "selected_checkboxes"
-    # and filter the scraped_data table to have only those ID entries
-    # store every left over entry in saved_data
+    data = json.loads(request.body)
+    selected_checkboxes = data.get('ids')
+    main_header = data.get('main_header')
+    sub_header = data.get('sub_header')
 
-    # Warning: Due to cross referencing, this method is not efficient and requires more memory
-    # Future Plans: Save data to saved_data table directly instead of cross referencing
-
-    # retrieve selected checkboxes, main header and subheader from request.POST
-    # assuming we are storing selected information in a list
-    selected_checkboxes = request.POST.getlist('checkedIds[]')
-    main_header = request.POST.get('main_header')
-    sub_header = request.POST.get('sub_header')
-    
-    # https://docs.djangoproject.com/en/4.2/topics/db/queries/
-    # filter id's
-    scraped_data_objs = scraped_data.objects.filter(id=selected_checkboxes)
-
-    # create a new saved_data object for each selected checkbox
-    for obj in scraped_data_objs:
+    for i in selected_checkboxes:
+        count=0
+        scraped_data_objs = scraped_data.objects.filter(id=i).values()
         saved_data.objects.create(
-            info=obj.info,
-            curator_url=obj.curator_url,
-            gen_url=obj.gen_url,
+            id=i,
+            info=scraped_data_objs[count]['info'],
+            curator_url=scraped_data_objs[count]['curator_url'],
+            gen_url=scraped_data_objs[count]['gen_url'],
             main_header=main_header,
             sub_header=sub_header
-        )
 
+        )
+        count+=1
+        
     # serialize data
     data = saved_data.objects.all()
     serializer = saved_data_serializer(data, many=True)
+
     return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def apiOverview(request):
+    api_urls = {
+        'scraped_data_view':'/scraped_data_view/', #GET
+        'scraped_data_create':'/scraped_data_create/',
+        'saved_data_view':'/saved_data_view/', #GET
+        'saved_data_create':'/saved_data_create/', #POST
+        'admin':'/admin/',
+    }
+    return JsonResponse(api_urls)
+
+@api_view(['GET'])
+def scraped_data_view(request):
+    scrape = scraped_data.objects.all()
+
+    #many=True since we want to view all data
+    # set many=False and provide primary key/id to view individual data
+    serializer = scraped_data_serializer(scrape, many=True)
+
+    #set safe=False so we can pass non-dict objects
+    return JsonResponse(serializer.data, safe=False)
+
 
 @api_view(['GET'])
 def saved_data_view(request):
