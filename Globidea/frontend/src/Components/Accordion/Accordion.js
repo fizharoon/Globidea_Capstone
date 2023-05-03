@@ -15,10 +15,10 @@ const Accordion = ({title, content, url}) => {
     };
 
     const contentStyle = {
-        maxHeight: isActive ? contentHeight + 'px' : 0,
-        display: isActive ? 'block' : 'none',
-        overflow: 'hidden',
-        transition: 'max-height 0.5s ease-in-out, display 0.5s ease-in-out',
+        maxHeight: isActive ? contentHeight + "px" : 0,
+        opacity: isActive ? 1 : 0,
+        overflow: "hidden",
+        transition: "max-height 0.5s ease-in-out, opacity 0.5s ease-in-out",
     }
 
     return (
