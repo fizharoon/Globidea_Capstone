@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import './Login.css';
+import { Link } from "react-router-dom";
 
 const login_api = async (username, password, success, fail) => {
   const response = await fetch(
-    'http://127.0.0.1:8000/api/login',
+    'http://127.0.0.1:8000/api/admin',
     {
       method: 'POST',
       headers: {
@@ -49,7 +50,7 @@ export const Login = (props) => {
 
     return (
       <div className="auth-form-container">
-      <h3>Login</h3>
+      <h3>Admin Login</h3>
       <form className="login-form" onSubmit={handleSubmit}>
         <label htmlFor="username">Username</label>
         <input
@@ -69,9 +70,15 @@ export const Login = (props) => {
           id="password"
           name="password"
         />
+<<<<<<< HEAD
         <button type="submit" className="goBack">Log In</button>
+=======
+        <Link to="/curatorpage">
+        <button type="submit">Log In
+        </button> </Link>
+>>>>>>> 610569e68592905fa808fca58f070ff545025cc3
       </form>
-            <button className="goBack" onClick={handleGoBack}>Go Back</button>
+            <button  onClick={handleGoBack}>Go Back</button>
 
         </div>
     )

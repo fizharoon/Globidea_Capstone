@@ -1,3 +1,11 @@
+body {
+  background-image: url("../assets/backgroundimg-4.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
 .App {
   text-align: center;
   display: flex;
@@ -6,6 +14,7 @@
   justify-content: center;
   color: white;
 }
+
 
 .auth-form-container, .login-form, .register-form {
   display: flex;
@@ -45,6 +54,8 @@ button {
   cursor: pointer;
   color: #7439db;
   margin-top: 1rem; /* add margin */
+  /* top:50%; */
+  width: 100%;
 }
 
 button.goBack {

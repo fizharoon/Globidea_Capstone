@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import Accordion from '../../Components/Accordion/Accordion';
+import AccordionContent from '../../Components/Accordion/AccordionContent';
 import '../../Pages/phases.css';
 
 class Phase_1 extends React.Component{
@@ -8,18 +9,15 @@ class Phase_1 extends React.Component{
     this.state = {
       scrape:[],
       header:[],
-      subHeadings:[],
-      active:{
-        id:'',
-        curator_url:'',
-        info:'',
-        main_header:'',
-        sub_header:'',
-      },
+      // subHeadings:[],
+      application:[],
+      orientation:[],
+      isActive: false,
+      contentHeight: 0
     }
   };
 
-  componentWillMount(){
+  componentDidMount(){
     this.fetchScrapedInfo()
   }
 
@@ -29,41 +27,64 @@ class Phase_1 extends React.Component{
     // and include CORS headers
     fetch('http://127.0.0.1:8000/api/saved_data_view')
     .then(response => response.json())
-    .then(data => 
+    .then(data => {
         this.setState({
             scrape:data
         })
-        )
+    })
   }
+
+  toggleAccordion = () => {
+    this.setState({
+      isActive: !this.state.isActive,
+      contentHeight: this.state.contentHeight === 0 ? this.contentDiv.scrollHeight : 0
+    });
+  };
 
   render(){
     var info = this.state.scrape;
 
-    var subHeadings = [];
-        info.forEach((scrape) => {
-            if (subHeadings.indexOf(scrape.sub_header) === -1) {
-                // if main header is not found in array, push
-                subHeadings.push(scrape.sub_header);
-            }
-        });
+    var application = [];
+    var orientation =[];
+
+    info.forEach((scrape) => {
+      if(scrape.sub_header === 'Application'){
+        application.push([scrape.info, scrape.gen_url]);
+      }
+      else if(scrape.sub_header === 'Orientation'){
+        orientation.push([scrape.info, scrape.gen_url]);
+      }
+    })
+
+    const contentStyle = {
+      maxHeight: this.state.isActive ? "200px" : 0,
+      opacity: this.state.isActive ? 1 : 0,
+      overflow: 'hidden',
+      transition: 'maxHeight 0.5s ease-in-out, opacity 0.5s ease-in-out',
+    }
 
     return(
       <div>
         <h1>Planning to Attend</h1>
-        {/* {subHeadings.map((subHeader, id) => {
-          return (
-            <div key={id} className="accordion">
-              <Accordion title={subHeader} />
-            </div>
-          )
-          })} */}
-          {info.map((scrape, id) => {
-            return (
-              <div key ={id} className="accordion">
-                <Accordion title={scrape.sub_header} content={scrape.info} url={scrape.gen_url}/>
-              </div>
+
+        <div className="accordion">
+          <Accordion title='Application' onClick={this.toggleAccordion}/>
+          
+          {application.map(([content, url], id) => {
+            return(
+              <AccordionContent key={id} content={content} url={url}/>
+            )})}
+        </div>
+
+        <div className='accordion'>
+        <Accordion title='Orientation' />
+
+          {orientation.map(([content, url], id) => {
+            return(
+              <AccordionContent key={id} content={content} url={url} />
             )
           })}
+        </div>
       </div>
     )
   }

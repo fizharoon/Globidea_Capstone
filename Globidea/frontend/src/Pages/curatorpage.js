@@ -1,6 +1,7 @@
 import React, {useState}from "react";
 import './curatorpage.css'
 // import Checkbox from "@mui/material/Checkbox";
+import { Link } from "react-router-dom";
 
 class Curator_Page extends React.Component {
     constructor(props){
@@ -8,7 +9,7 @@ class Curator_Page extends React.Component {
         this.state = {
             scrape:[],
             header:[],
-            subHeadings:[],
+            // subHeadings:[],
             checkedIds:[],
             active:{
                 id:'',
@@ -63,16 +64,18 @@ class Curator_Page extends React.Component {
     
     handleMainHeadingSelect(e){
         const selectedMainHeading = e.target.value;
-        const activeHeader = this.state.header.find(header => header.main_header === selectedMainHeading);
+        const selectedSubHeading = this.state.selectedSubHeading;
+        //const activeHeader = this.state.header.find(header => header.main_header === selectedMainHeading);
         
         this.setState({
             active: {
                 ...this.state.active,
                 main_header: selectedMainHeading,
-                sub_header: '',
+                sub_header: selectedSubHeading,
             },
             selectedMainHeading,
-            subHeadings: activeHeader?.filter(selectedMainHeading),
+            selectedSubHeading,
+            // sub_header: activeHeader?.filter(header => header.main_header === selectedMainHeading),
         });
         console.log('main heading: ', selectedMainHeading)
     }
@@ -105,13 +108,18 @@ class Curator_Page extends React.Component {
     handleUpdate = (e) => {
       e.preventDefault();
       const { checkedIds, selectedMainHeading, selectedSubHeading } = this.state;
-
-      const form = e.target
-      const formData = new FormData(form)
   
       fetch('http://127.0.0.1:8000/api/saved_data_create', {
-          method: form.method,
-          body: formData,
+          method: "POST",
+          headers: {
+            'Accept': 'application/json',
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ids: checkedIds,
+            main_header: selectedMainHeading,
+            sub_header: selectedSubHeading,
+          }),
         })
       .then(response => {
           if(!response.ok){
@@ -127,23 +135,24 @@ class Curator_Page extends React.Component {
       });
       console.log('ids: ', checkedIds)
       console.log('main: ', selectedMainHeading)
-      console.log('sub: ',selectedSubHeading)
-
+      console.log('sub: ', selectedSubHeading)
   }
   
     handleSubHeadingSelect(e){
-      const selectedSubHeadings = Array.from(
-          e.target.selectedOptions,
-          option => option.value
-      );
-      this.setState({
-          active: {
-              ...this.state.active,
-              sub_header: selectedSubHeadings,
-          },
-          selectedSubHeadings,
-      });
-      console.log('sub heading: ',selectedSubHeadings)
+
+      const selectedMainHeading = this.state.selectedMainHeading;
+      const selectedSubHeading = e.target.value;
+        
+        this.setState({
+            active: {
+                ...this.state.active,
+                main_header: selectedMainHeading,
+                sub_header: selectedSubHeading,
+            },
+            selectedMainHeading,
+            selectedSubHeading,
+        });
+        console.log('sub: ', selectedSubHeading)
     }
 
     handleCheckbox = (e) => {
@@ -190,19 +199,22 @@ class Curator_Page extends React.Component {
           // <div style={{backgroundColor: "pink"}}>
           <div>
             <h2>Curator Page<br/></h2>
-            <button className="logout">Logout</button>
+
+            <Link to="/"><button className="logout">Logout</button></Link>
             <br/>
             <div className="row">
-              <div className="column">
+              <div className="left">
+                <div className="border">
                 {/* Form to send link to back-end */}
                 <form method="POST" onSubmit={this.handleCuratorInputLinkSubmit}>
-                    <label for="curator_link" id="link">
+                    <label for="curator_link" id="link" >
                         Insert Link:
                     </label>
                     <input
                         type="url"
                         id="url"
                         name="url"
+                        placeholder="https://example.com"
                     ></input>
                     <button type = 'submit'>Scrape Data</button>
                 </form>
@@ -218,6 +230,7 @@ class Curator_Page extends React.Component {
                   onChange={this.handleMainHeadingSelect}
                   value={selectedMainHeading}
                 >
+                  <option value='' >--Select Category--</option>
                   {/* Add a "--Select Phase--"in the table */}
                   {mainHeadings.map((mainHeader, index) => {
                     return (
@@ -230,7 +243,7 @@ class Curator_Page extends React.Component {
 
                 {/* Sub heading options differ depending on main heading selected */}
                 <br/>
-                <label for="sub-headers">Choose a Sub-Category:</label>
+                <label for="sub-headers">Choose a Sub-Heading:</label>
                 <select 
                     name="sub-headers" 
                     id="sub-headers"
@@ -249,29 +262,31 @@ class Curator_Page extends React.Component {
                 ))} */}
                 </select>
                 <br/>
-                <form method="POST" id="updateSubmit" onChange={this.handleUpdate}>
+                <form id="updateSubmit" onSubmit={this.handleUpdate}>
                 <button type='submit'>Update</button>
                 </form>
                 
+                </div>
             </div>
 
               {/* Display Data from scrape API Call */}
-              <div className="column">
-                <th></th>
-                <th>Information</th>
+              <div className="right">
+              <h3>Scraped Information</h3>
                 {create.map( (scrape, id) => {
                   return (
-                    <div key={id} className="scrape-wrapper flex-wrapper">
-                      <div style={{ flex: 1 }}>
-                        <input 
-                        type="checkbox" 
-                        onChange={this.handleCheckbox }
-                        value={scrape.id}
-                        />
-                      </div>
-                      <div style={{ flex: 7 }}>
-                        <span>{scrape.info}</span>
-                      </div>
+                    <div key={id} className="scrape-wrapper flex-wrapper ">
+                      <label className="label">
+                        <div className="tuple" style={{ flex: 1 }}>
+                          <input 
+                          type="checkbox" 
+                          onChange={this.handleCheckbox }
+                          value={scrape.id}
+                          />
+                        </div>
+                        <div className="tuple div-table-row"style={{ flex: 7 }}>
+                          <span>{scrape.info}</span>
+                        </div>
+                      </label>
                     </div>
                   );
                 })}
