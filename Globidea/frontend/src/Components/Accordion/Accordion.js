@@ -8,7 +8,7 @@ const Accordion = ({title}) => {
     };
 
     const contentStyle = {
-        maxHeight: isActive ? contentHeight + 'px' : 0,
+        maxHeight: isActive ?  '0px' : 0,
         display: isActive ? 1 : 0,
         overflow: 'hidden',
         transition: 'max-height 0.5s ease-in-out, display 0.5s ease-in-out',
