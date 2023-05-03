@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import Accordion from '../../Components/Accordion/Accordion';
 import AccordionContent from '../../Components/Accordion/AccordionContent';
 import '../../Pages/phases.css';
@@ -9,7 +9,7 @@ class Phase_1 extends React.Component{
     this.state = {
       scrape:[],
       header:[],
-      subHeadings:[],
+      // subHeadings:[],
       application:[],
       orientation:[],
       isActive: false,
@@ -44,70 +44,48 @@ class Phase_1 extends React.Component{
   render(){
     var info = this.state.scrape;
 
-    var subHeadings = [];
-        info.forEach((scrape) => {
-            if (subHeadings.indexOf(scrape.sub_header) === -1) {
-                // if main header is not found in array, push
-                subHeadings.push(scrape.sub_header);
-            }
-        });
-
     var application = [];
     var orientation =[];
+
     info.forEach((scrape) => {
       if(scrape.sub_header === 'Application'){
-        application.push(scrape.info);
-        //application.push(scrape.gen_url);
+        application.push([scrape.info, scrape.gen_url]);
       }
       else if(scrape.sub_header === 'Orientation'){
-        orientation.push(scrape.info);
+        orientation.push([scrape.info, scrape.gen_url]);
       }
     })
 
     const contentStyle = {
-      maxHeight: this.state.isActive ? '200px' : 0,
-      display: this.state.isActive ? 'block' : 'none',
+      maxHeight: this.state.isActive ? "200px" : 0,
+      opacity: this.state.isActive ? 1 : 0,
       overflow: 'hidden',
-      transition: 'maxHeight 0.5s ease-in-out, display 0.5s ease-in-out',
-  }
+      transition: 'maxHeight 0.5s ease-in-out, opacity 0.5s ease-in-out',
+    }
 
     return(
       <div>
         <h1>Planning to Attend</h1>
 
         <div className="accordion">
-          <Accordion title='Applicaton' />
-          {/* <div className="accordion-title" onClick={this.toggleAccordion}>
-            <div>Application</div>
-            <div>{this.state.isActive ? '-' : '+'}</div>
-          </div> */}
-          {application.map((content, id) => {
+          <Accordion title='Application' onClick={this.toggleAccordion}/>
+          
+          {application.map(([content, url], id) => {
             return(
-              <AccordionContent content={content} />
-            // <div key={id} className="accordion-content" style={contentStyle} ref={(div) => { this.contentDiv = div; }}>
-            //   <li>{content}</li>
-            //   {/* <p><a href={url} target="_blank">Learn More</a></p> */}
-            // </div>
+              <AccordionContent key={id} content={content} url={url}/>
             )})}
-        </div>        
+        </div>
+
         <div className='accordion'>
         <Accordion title='Orientation' />
-        {/* <div className="accordion-title" onClick={this.toggleAccordion}>
-            <div>Orientation</div>
-            <div>{this.state.isActive ? '-' : '+'}</div>
-        </div> */}
-          {orientation.map((content, id) => {
+
+          {orientation.map(([content, url], id) => {
             return(
-              <AccordionContent content={content} />
-            // <div key={id} className="accordion-content" style={contentStyle} ref={(div) => { this.contentDiv = div; }}>
-            //   <li>{content}</li>
-            //   {/* <p><a href={url} target="_blank">Learn More</a></p> */}
-            // </div>
+              <AccordionContent key={id} content={content} url={url} />
             )
           })}
         </div>
-        </div>
-
+      </div>
     )
   }
 }
