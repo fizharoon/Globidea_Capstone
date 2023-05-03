@@ -4,16 +4,16 @@
   padding: 10px;
   height: 300px; 
   /* background-color:pink; */
-  border-color: black;
-  border-style: double;
+  /* border-color: black;
+  border-style: double; */
   margin-bottom: 300px;
   border-bottom: 0px;
 
 }
   .row{
     /* background-color:pink; */
-  border-color: black;
-  border-style: double;
+  /* border-color: black;
+  border-style: double; */
   }
   /* Clear floats after the columns */
   .row:after {
@@ -21,8 +21,8 @@
     display: table;
     clear: both;
     /* background-color:pink; */
-  border-color: black;
-  border-style: double;
+  /* border-color: black;
+  border-style: double; */
   }
 
   h2{
