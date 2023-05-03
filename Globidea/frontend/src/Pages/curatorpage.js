@@ -272,14 +272,14 @@ class Curator_Page extends React.Component {
                 {create.map( (scrape, id) => {
                   return (
                     <div key={id} className="scrape-wrapper flex-wrapper">
-                      <div style={{ flex: 1 }}>
+                      <div className="tuple div-table-row" style={{ flex: 1 }}>
                         <input 
                         type="checkbox" 
                         onChange={this.handleCheckbox }
                         value={scrape.id}
                         />
                       </div>
-                      <div style={{ flex: 7 }}>
+                      <div className="tuple div-table-row"style={{ flex: 7 }}>
                         <span>{scrape.info}</span>
                       </div>
                     </div>

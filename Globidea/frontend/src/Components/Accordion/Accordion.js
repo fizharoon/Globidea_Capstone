@@ -8,11 +8,11 @@ const Accordion = ({title}) => {
     };
 
     const contentStyle = {
-        maxHeight: isActive ? "200px" : 0,
-        opacity: isActive ? 1 : 0,
-        overflow: "hidden", 
-        transition: "max-height 0.5s ease-in-out, opacity 0.5s ease-in-out", 
-    };
+        maxHeight: isActive ? contentHeight + 'px' : 0,
+        display: isActive ? 1 : 0,
+        overflow: 'hidden',
+        transition: 'max-height 0.5s ease-in-out, display 0.5s ease-in-out',
+    }
 
     return (
         <div className="accordion-item">
