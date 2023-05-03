@@ -56,7 +56,7 @@ export const Login = (props) => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           type="text"
-          placeholder=""
+          placeholder="Yourname"
           id="username"
           name="username"
         />
@@ -69,7 +69,7 @@ export const Login = (props) => {
           id="password"
           name="password"
         />
-        <button type="submit">Log In</button>
+        <button type="submit" className="goBack">Log In</button>
       </form>
             <button className="goBack" onClick={handleGoBack}>Go Back</button>
 
