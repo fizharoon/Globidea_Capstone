@@ -9,7 +9,7 @@ import "./Home.css";
 const Home = () => {
   return (
     <div>
-      <h1>Welcome to our website!</h1>
+      <h1>Welcome to University of Utah!</h1>
       <div className="timeline-container">
         <Link to="/phase1" className="timeline-item" title="Planning to Attend">
           <div className="timeline-item-content">
@@ -42,6 +42,9 @@ const Home = () => {
           </div>
         </Link>
       </div>
+      {/* <div>
+        <h1>Meet the Team</h1>
+      </div> */}
     </div>
   );
 };

@@ -203,16 +203,18 @@ class Curator_Page extends React.Component {
             <Link to="/"><button className="logout">Logout</button></Link>
             <br/>
             <div className="row">
-              <div className="column">
+              <div className="left">
+                <div className="border">
                 {/* Form to send link to back-end */}
                 <form method="POST" onSubmit={this.handleCuratorInputLinkSubmit}>
-                    <label for="curator_link" id="link">
+                    <label for="curator_link" id="link" >
                         Insert Link:
                     </label>
                     <input
                         type="url"
                         id="url"
                         name="url"
+                        placeholder="https://example.com"
                     ></input>
                     <button type = 'submit'>Scrape Data</button>
                 </form>
@@ -264,24 +266,27 @@ class Curator_Page extends React.Component {
                 <button type='submit'>Update</button>
                 </form>
                 
+                </div>
             </div>
 
               {/* Display Data from scrape API Call */}
-              <div className="column">
-                
+              <div className="right">
+              <h3>Scraped Information</h3>
                 {create.map( (scrape, id) => {
                   return (
-                    <div key={id} className="scrape-wrapper flex-wrapper">
-                      <div className="tuple div-table-row" style={{ flex: 1 }}>
-                        <input 
-                        type="checkbox" 
-                        onChange={this.handleCheckbox }
-                        value={scrape.id}
-                        />
-                      </div>
-                      <div className="tuple div-table-row"style={{ flex: 7 }}>
-                        <span>{scrape.info}</span>
-                      </div>
+                    <div key={id} className="scrape-wrapper flex-wrapper ">
+                      <label className="label">
+                        <div className="tuple" style={{ flex: 1 }}>
+                          <input 
+                          type="checkbox" 
+                          onChange={this.handleCheckbox }
+                          value={scrape.id}
+                          />
+                        </div>
+                        <div className="tuple div-table-row"style={{ flex: 7 }}>
+                          <span>{scrape.info}</span>
+                        </div>
+                      </label>
                     </div>
                   );
                 })}
