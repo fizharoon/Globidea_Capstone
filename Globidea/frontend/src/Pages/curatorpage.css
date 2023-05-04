@@ -72,11 +72,14 @@
     color:black;
     font-size:medium;
     float:right;
+    border-color: black;
+    border-width: 2px;
   }
   button:hover{
     transition: 0.2s;
     background-color:darkred;
     color:white;
+    
   }
   .row{
     margin: auto;
@@ -90,11 +93,17 @@
   }
 
   .logout{
-    position:fixed;
-   right:10px;
+    position: absolute;   
+    right:10px;
    top:5px;
-   background-color: lightblue;
+   background-color: white;
    float:right;
+  }
+  .logout:hover{
+    background-color: black;
+    color:white;
+    border-color: white;
+    border-width: 2px;
   }
 
   input[type="checkbox"] {
@@ -169,3 +178,27 @@
     border-style: double;
     border-color: #000;
   }
+
+  div.scroll {
+    /* background-color: #fed9ff; */
+    width: 600px;
+    height: 150px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .modal__container-title {
+    color: #fff;
+    background: black;
+    font-size: 16px;
+    padding: 0 5px;
+    display: flex;
+    /* position:fixed; */
+    position: sticky;
+    top: 0px;
+    z-index: 1000;
+    width: 100%;
+}
+  

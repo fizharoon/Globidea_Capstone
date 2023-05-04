@@ -57,7 +57,7 @@ export const Login = (props) => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           type="text"
-          placeholder="Yourname"
+          placeholder=""
           id="username"
           name="username"
         />
@@ -66,19 +66,15 @@ export const Login = (props) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
-          placeholder="********"
+          placeholder=""
           id="password"
           name="password"
         />
-<<<<<<< HEAD
-        <button type="submit" className="goBack">Log In</button>
-=======
         <Link to="/curatorpage">
-        <button type="submit">Log In
+        <button className="goBack"type="submit">Log In
         </button> </Link>
->>>>>>> 610569e68592905fa808fca58f070ff545025cc3
       </form>
-            <button  onClick={handleGoBack}>Go Back</button>
+            <button className="goBack"onClick={handleGoBack}>Go Back</button>
 
         </div>
     )

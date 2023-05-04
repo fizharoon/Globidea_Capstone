@@ -198,9 +198,10 @@ class Curator_Page extends React.Component {
         return (
           // <div style={{backgroundColor: "pink"}}>
           <div>
-            <h2>Curator Page<br/></h2>
-
-            <Link to="/"><button className="logout">Logout</button></Link>
+            <div className="modal__container-title modal__container">
+              <h2>Curator Page<br/></h2>
+              <Link to="/"><button className="logout">Logout</button></Link>
+            </div>
             <br/>
             <div className="row">
               <div className="left">
@@ -208,7 +209,7 @@ class Curator_Page extends React.Component {
                 {/* Form to send link to back-end */}
                 <form method="POST" onSubmit={this.handleCuratorInputLinkSubmit}>
                     <label for="curator_link" id="link" >
-                        Insert Link:
+                        <h3>Insert Link:</h3>
                     </label>
                     <input
                         type="url"
@@ -224,7 +225,7 @@ class Curator_Page extends React.Component {
                 {/* Update Submit Form */}
                 
 
-                <label for="phases">Choose a Phase:</label>
+                <label for="phases"><h3>Choose a Phase:</h3></label>
                 <select
                   name="main-headers"
                   onChange={this.handleMainHeadingSelect}
@@ -243,7 +244,7 @@ class Curator_Page extends React.Component {
 
                 {/* Sub heading options differ depending on main heading selected */}
                 <br/>
-                <label for="sub-headers">Choose a Sub-Heading:</label>
+                <label for="sub-headers"><h3>Choose a Sub-Heading:</h3></label>
                 <select 
                     name="sub-headers" 
                     id="sub-headers"
@@ -265,7 +266,7 @@ class Curator_Page extends React.Component {
                 <form id="updateSubmit" onSubmit={this.handleUpdate}>
                 <button type='submit'>Update</button>
                 </form>
-                
+
                 </div>
             </div>
 
@@ -274,7 +275,7 @@ class Curator_Page extends React.Component {
               <h3>Scraped Information</h3>
                 {create.map( (scrape, id) => {
                   return (
-                    <div key={id} className="scrape-wrapper flex-wrapper ">
+                    <div key={id} className="scrape-wrapper flex-wrapper">
                       <label className="label">
                         <div className="tuple" style={{ flex: 1 }}>
                           <input 

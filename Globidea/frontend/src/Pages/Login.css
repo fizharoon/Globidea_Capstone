@@ -49,18 +49,19 @@ button {
   border: none;
   background-color: white;
   padding: 18px;
-  font-size: 12px; /* change font size */
+  font-size: 20px; /* change font size */
   border-radius: 10px;
   cursor: pointer;
   color: #7439db;
   margin-top: 1rem; /* add margin */
   /* top:50%; */
-  width: 100%;
+  /* width: 100%; */
+  border: #cc0000;
 }
 
-button.goBack {
+.goBack {
   padding: 18px; /* change button padding */
-  font-size: 12px; /* change font size */
+  font-size: 18px; /* change font size */
   width: 100%; /* set width */
 }
 
