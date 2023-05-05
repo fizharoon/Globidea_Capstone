@@ -6,13 +6,7 @@ class Phase1 extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      scrape:[],
-      header:[],
-      // subHeadings:[],
-      application:[],
-      orientation:[],
-      isActive: false,
-      contentHeight: 0
+      scrape:[]
     }
   };
 
@@ -37,23 +31,28 @@ class Phase1 extends React.Component{
     var info = this.state.scrape;
 
     var application = [];
-    var orientation =[];
+    var financialAid = [];
+    var studentLife = [];
+    var campus = [];
+    var majorsAndMinors = [];
 
     info.forEach((scrape) => {
       if(scrape.sub_header === 'Application'){
         application.push([scrape.info, scrape.gen_url]);
       }
-      else if(scrape.sub_header === 'Orientation'){
-        orientation.push([scrape.info, scrape.gen_url]);
+      else if(scrape.sub_header === 'Cost/Financial Aid'){
+        financialAid.push([scrape.info, scrape.gen_url]);
+      }
+      else if(scrape.sub_header === 'Student Life'){
+        studentLife.push([scrape.info, scrape.gen_url]);
+      }
+      else if(scrape.sub_header === 'Campus Tour/Map'){
+        campus.push([scrape.info, scrape.gen_url]);
+      }
+      else if(scrape.sub_header === 'Majors/Minors'){
+        majorsAndMinors.push([scrape.info, scrape.gen_url]);
       }
     })
-
-    const contentStyle = {
-      maxHeight: this.state.isActive ? "200px" : 0,
-      opacity: this.state.isActive ? 1 : 0,
-      overflow: 'hidden',
-      transition: 'maxHeight 0.5s ease-in-out, opacity 0.5s ease-in-out',
-    }
 
     return(
       <div>
@@ -68,8 +67,29 @@ class Phase1 extends React.Component{
 
         <div className='accordion'>
           <Accordion 
-            title='Orientation' 
-            content={orientation}
+            title='Cost/Financial Aid' 
+            content={financialAid}
+          />
+        </div>
+
+        <div className='accordion'>
+          <Accordion 
+            title='Student Life' 
+            content={studentLife}
+          />
+        </div>
+
+        <div className='accordion'>
+          <Accordion 
+            title='Campus Tour/Map' 
+            content={campus}
+          />
+        </div>
+
+        <div className='accordion'>
+          <Accordion 
+            title='Majors/Minors' 
+            content={majorsAndMinors}
           />
         </div>
       </div>

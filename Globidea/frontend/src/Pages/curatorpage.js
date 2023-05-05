@@ -253,7 +253,26 @@ class Curator_Page extends React.Component {
                 >
                     <option value="">--Select Category--</option>
                     <option value="Application">Application</option>
-                    <option value="Orientation">Orientation</option>
+                    <option value="Campus Tour/Map">Campus Tour/Map</option>
+                    <option value="Cap n Gown">Cap n Gown</option>
+                    <option value="Careers">Careers</option>
+                    <option value="Class Registration">Class Registration</option>
+                    <option value="Clubs">Clubs</option>
+                    <option value="Cost/Financial Aid">Cost/Financial Aid</option>
+                    <option value="Declare Major">Declare Major</option>
+                    <option value="Graduate School">Graduate School</option>
+                    <option value="Graduation">Graduation</option>
+                    <option value="Health">Health</option>
+                    <option value="Housing">Housing</option>
+                    <option value="Library">Library</option>
+                    <option value="Majors/Minors">Majors/Minors</option>
+                    <option value="Meet With a Career Counselor">Meet With a Careeer Counselor</option>
+                    <option value="Meet With a Counselor">Meet With a Counselor</option>
+                    <option value="Pay Tuition">Pay Tuition</option>
+                    <option value="Signing Up/Attending Orientation">Signing Up/Attending Orientation</option>
+                    <option value="Student Life">Student Life</option>
+                    <option value="Textbooks">Textbooks</option>
+                    <option value="Tutoring Center">Tutoring Center</option>
 
                     {/* Fix Later */}
                     {/* { subheadings?.map((subHeader, index) => (
