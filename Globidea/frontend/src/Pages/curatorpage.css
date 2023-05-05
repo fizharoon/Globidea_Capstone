@@ -98,9 +98,10 @@
    top:5px;
    background-color: white;
    float:right;
+   
   }
   .logout:hover{
-    background-color: black;
+    background-color: darkred;
     color:white;
     border-color: white;
     border-width: 2px;

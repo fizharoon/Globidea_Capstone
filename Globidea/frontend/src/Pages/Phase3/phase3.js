@@ -8,8 +8,14 @@ const Phase_3 = () => {
       <div>
         <h1>Making Progress</h1>
         <div className="accordion">
-          {accordionContent.map(({title, content}) => (<Accordion title={title} content={content} />))}
-        </div>
+            {/* <Accordion
+                title="help me"
+                content={accordionContent.map(({title, content}) => [title, content])}
+            /> */}
+                {accordionContent.map(({title, content}) => (
+                    <Accordion title={title} content={[[content,null]]} />
+                ))}
+            </div>
       </div>
     )
   }

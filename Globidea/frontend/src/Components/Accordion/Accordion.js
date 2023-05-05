@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-
-const Accordion = ({title}) => {
-    const [isActive, setIsActive] = useState(true);
+import AccordionContent from '../../Components/Accordion/AccordionContent';
+ 
+const Accordion = ({title, content}) => {
+    const [isActive, setIsActive] = useState(false);
 
     const toggleAccordion = () => {
         setIsActive(!isActive);
@@ -20,6 +21,13 @@ const Accordion = ({title}) => {
                 <div>{title}</div>
                 <div>{isActive ? '-' : '+'}</div>
             </div>
+            {isActive ? (
+                content.map(([content, url], index) => {
+                    return(
+                        <AccordionContent key={index} content={content} url={url}/>
+                    )
+                })
+            ) : <></>}
         </div>
     );
 };

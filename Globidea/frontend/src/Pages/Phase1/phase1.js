@@ -1,9 +1,8 @@
 import React from 'react';
 import Accordion from '../../Components/Accordion/Accordion';
-import AccordionContent from '../../Components/Accordion/AccordionContent';
 import '../../Pages/phases.css';
 
-class Phase_1 extends React.Component{
+class Phase1 extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -34,14 +33,7 @@ class Phase_1 extends React.Component{
     })
   }
 
-  toggleAccordion = () => {
-    this.setState({
-      isActive: !this.state.isActive,
-      contentHeight: this.state.contentHeight === 0 ? this.contentDiv.scrollHeight : 0
-    });
-  };
-
-  render(){
+  render=()=>{
     var info = this.state.scrape;
 
     var application = [];
@@ -68,26 +60,21 @@ class Phase_1 extends React.Component{
         <h1>Planning to Attend</h1>
 
         <div className="accordion">
-          <Accordion title='Application' onClick={this.toggleAccordion}/>
-          
-          {application.map(([content, url], id) => {
-            return(
-              <AccordionContent key={id} content={content} url={url}/>
-            )})}
+          <Accordion 
+            title='Application' 
+            content={application}
+          />
         </div>
 
         <div className='accordion'>
-        <Accordion title='Orientation' />
-
-          {orientation.map(([content, url], id) => {
-            return(
-              <AccordionContent key={id} content={content} url={url} />
-            )
-          })}
+          <Accordion 
+            title='Orientation' 
+            content={orientation}
+          />
         </div>
       </div>
     )
   }
 }
 
-export default Phase_1;
+export default Phase1;
