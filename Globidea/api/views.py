@@ -51,7 +51,7 @@ def scraped_data_create(request):
 
 def genSourceURL(url,text):
     count = len(text.split())
-    if count>6:
+    if count>16:
         first, last = text.split()[:3], text.split()[-3:]
         newFirst, newLast = ' '.join(first), ' '.join(last)
         modFirst, modLast = newFirst.replace(' ','%20'), newLast.replace(' ','%20')
