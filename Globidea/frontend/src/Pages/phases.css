@@ -21,6 +21,10 @@
     height: 25vh;
     font-size: 30;
   }
+
+  p {
+    text-align: center;
+  }
   
   .accordion {
     max-width: 750px;
