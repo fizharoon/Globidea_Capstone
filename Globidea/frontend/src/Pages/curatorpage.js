@@ -203,95 +203,94 @@ class Curator_Page extends React.Component {
               <Link to="/"><button className="logout">Logout</button></Link>
             </div>
             <br/>
-            <div className="row">
+            <div className="row">              
               <div className="left">
                 <div className="border">
-                {/* Form to send link to back-end */}
-                <form method="POST" onSubmit={this.handleCuratorInputLinkSubmit}>
-                    <label for="curator_link" id="link" >
-                        <h3>Insert Link:</h3>
-                    </label>
-                    <input
-                        type="url"
-                        id="url"
-                        name="url"
-                        placeholder="https://example.com"
-                    ></input>
-                    <button type = 'submit'>Scrape Data</button>
-                </form>
-                <br></br><br></br>
-                
-                {/* Select Main Phase */}
-                {/* Update Submit Form */}
-                
+                  {/* Form to send link to back-end */}
+                  <form method="POST" onSubmit={this.handleCuratorInputLinkSubmit}>
+                      <label for="curator_link" id="link" >
+                          <h3><b>Insert Link:</b></h3>
+                      </label>
+                      <input
+                          type="url"
+                          id="url"
+                          name="url"
+                          placeholder="https://example.com"
+                      ></input>
+                      <button type = 'submit'>Scrape Data</button>
+                  </form>
+                  <br></br><br></br>
+                  
+                  {/* Select Main Phase */}
+                  {/* Update Submit Form */}
+                  
 
-                <label for="phases"><h3>Choose a Phase:</h3></label>
-                <select
-                  name="main-headers"
-                  onChange={this.handleMainHeadingSelect}
-                  value={selectedMainHeading}
-                >
-                  <option value='' >--Select Category--</option>
-                  {/* Add a "--Select Phase--"in the table */}
-                  {mainHeadings.map((mainHeader, index) => {
-                    return (
-                      <option key={index} value= {mainHeader}> 
-                        {mainHeader}
-                      </option>
-                    );
-                  })}
-                </select>
-
-                {/* Sub heading options differ depending on main heading selected */}
-                <br/>
-                <label for="sub-headers"><h3>Choose a Sub-Heading:</h3></label>
-                <select 
-                    name="sub-headers" 
-                    id="sub-headers"
-                    value={active.sub_header}
-                    onChange={this.handleSubHeadingSelect}
-                >
-                    <option value="">--Select Category--</option>
-                    <option value="Application">Application</option>
-                    <option value="Campus Tour/Map">Campus Tour/Map</option>
-                    <option value="Cap n Gown">Cap n Gown</option>
-                    <option value="Careers">Careers</option>
-                    <option value="Class Registration">Class Registration</option>
-                    <option value="Clubs">Clubs</option>
-                    <option value="Cost/Financial Aid">Cost/Financial Aid</option>
-                    <option value="Declare Major">Declare Major</option>
-                    <option value="Graduate School">Graduate School</option>
-                    <option value="Graduation">Graduation</option>
-                    <option value="Health">Health</option>
-                    <option value="Housing">Housing</option>
-                    <option value="Library">Library</option>
-                    <option value="Majors/Minors">Majors/Minors</option>
-                    <option value="Meet With a Career Counselor">Meet With a Careeer Counselor</option>
-                    <option value="Meet With a Counselor">Meet With a Counselor</option>
-                    <option value="Pay Tuition">Pay Tuition</option>
-                    <option value="Signing Up/Attending Orientation">Signing Up/Attending Orientation</option>
-                    <option value="Student Life">Student Life</option>
-                    <option value="Textbooks">Textbooks</option>
-                    <option value="Tutoring Center">Tutoring Center</option>
-
-                    {/* Fix Later */}
-                    {/* { subheadings?.map((subHeader, index) => (
-                        <option key={index}  value={subHeader}>
-                            {subHeader}
+                  <label for="phases"><h3><b>Choose a Phase:</b></h3></label>
+                  <select
+                    name="main-headers"
+                    onChange={this.handleMainHeadingSelect}
+                    value={selectedMainHeading}
+                  >
+                    <option value='' >--Select Category--</option>
+                    {/* Add a "--Select Phase--"in the table */}
+                    {mainHeadings.map((mainHeader, index) => {
+                      return (
+                        <option key={index} value= {mainHeader}> 
+                          {mainHeader}
                         </option>
-                ))} */}
-                </select>
-                <br/>
-                <form id="updateSubmit" onSubmit={this.handleUpdate}>
-                <button type='submit'>Update</button>
-                </form>
+                      );
+                    })}
+                  </select>
 
+                  {/* Sub heading options differ depending on main heading selected */}
+                  <br/>
+                  <label for="sub-headers"><h3><b>Choose a Sub-Heading:</b></h3></label>
+                  <select 
+                      name="sub-headers" 
+                      id="sub-headers"
+                      value={active.sub_header}
+                      onChange={this.handleSubHeadingSelect}
+                  >
+                      <option value="">--Select Category--</option>
+                      <option value="Application">Application</option>
+                      <option value="Campus Tour/Map">Campus Tour/Map</option>
+                      <option value="Cap n Gown">Cap n Gown</option>
+                      <option value="Careers">Careers</option>
+                      <option value="Class Registration">Class Registration</option>
+                      <option value="Clubs">Clubs</option>
+                      <option value="Cost/Financial Aid">Cost/Financial Aid</option>
+                      <option value="Declare Major">Declare Major</option>
+                      <option value="Graduate School">Graduate School</option>
+                      <option value="Graduation">Graduation</option>
+                      <option value="Health">Health</option>
+                      <option value="Housing">Housing</option>
+                      <option value="Library">Library</option>
+                      <option value="Majors/Minors">Majors/Minors</option>
+                      <option value="Meet With a Career Counselor">Meet With a Careeer Counselor</option>
+                      <option value="Meet With a Counselor">Meet With a Counselor</option>
+                      <option value="Pay Tuition">Pay Tuition</option>
+                      <option value="Signing Up/Attending Orientation">Signing Up/Attending Orientation</option>
+                      <option value="Student Life">Student Life</option>
+                      <option value="Textbooks">Textbooks</option>
+                      <option value="Tutoring Center">Tutoring Center</option>
+
+                      {/* Fix Later */}
+                      {/* { subheadings?.map((subHeader, index) => (
+                          <option key={index}  value={subHeader}>
+                              {subHeader}
+                          </option>
+                  ))} */}
+                  </select>
+                  <br/>
+                  <form id="updateSubmit" onSubmit={this.handleUpdate}>
+                  <button type='submit'>Update</button>
+                  </form>
                 </div>
             </div>
 
               {/* Display Data from scrape API Call */}
               <div className="right">
-              <h3>Scraped Information</h3>
+              <h3><b>Scraped Information</b></h3>
                 {create.map( (scrape, id) => {
                   return (
                     <div key={id} className="scrape-wrapper flex-wrapper">
