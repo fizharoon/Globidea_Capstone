@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import './Login.css';
 import { Link } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 const login_api = async (username, password, success, fail) => {
   const response = await fetch(
@@ -30,7 +31,8 @@ const login_api = async (username, password, success, fail) => {
 };
 
 
-export const Login = (props) => {
+export const Login = () => {
+  //const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -40,10 +42,25 @@ export const Login = (props) => {
     window.location = "/";
   };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(username);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (username === 'ADMIN' && password === '123') {
+      console.log("Login successful!");
+      alert("Login successful!"); 
+      setTimeout(() => { 
+        window.location.href = "/curatorpage";
+      }, 2000);
+      
+      
+     
+      window.location.href = "/curatorpage";
+      // props.history.push('/curatorpage');
+    } else {
+      
+      console.log("Invalid username or password");
+      alert("Invalid username or password");
     }
+  }
     const handleGoBack = () => {
       window.history.back();
     };
@@ -70,12 +87,11 @@ export const Login = (props) => {
           id="password"
           name="password"
         />
-        <Link to="/curatorpage">
-        <button className="goBack"type="submit">Log In
-        </button> </Link>
+         <button className="goBack" type="submit">Log In</button>
       </form>
             <button className="goBack"onClick={handleGoBack}>Go Back</button>
 
         </div>
     )
 }
+export default Login;
