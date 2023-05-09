@@ -10,6 +10,7 @@ export const Nav = styled.nav`
     align-items: center;
     padding: 0.2rem calc((100vw - 1000px) / 2);
     z-index: 12;
+    
 `;
 export const NavLogo = styled(Link)`
   cursor: pointer;
@@ -28,7 +29,7 @@ padding: 0 1rem;
 height: 100%;
 cursor: pointer;
 &:hover {
-  color: lightblue;
+  color: black;
   // background-color: white;
   transition: 0.2s;
 }
@@ -46,6 +47,7 @@ export const Bars = styled(FaBars)`
     font-size: 1.8rem;
     cursor: pointer;
   }
+  
 `;
 
 export const NavMenu = styled.div`
@@ -56,6 +58,8 @@ export const NavMenu = styled.div`
   @media screen and (max-width: 768px) {
     display: none;
   }
+
+  
 `;
 
 export const NavBtn = styled.nav`
