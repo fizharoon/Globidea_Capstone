@@ -44,7 +44,7 @@ export const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (username === 'ADMIN' && password === '123') {
+    if (username === 'admin' && password === 'globidea') {
       console.log("Login successful!");
       alert("Login successful!"); 
       setTimeout(() => { 
