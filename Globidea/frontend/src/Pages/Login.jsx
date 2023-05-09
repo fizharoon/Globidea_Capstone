@@ -45,8 +45,8 @@ export const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (username === 'admin' && password === 'globidea') {
-      console.log("Login successful!");
-      alert("Login successful!"); 
+      // console.log("Login successful!");
+      // alert("Login successful!"); 
       setTimeout(() => { 
         window.location.href = "/curatorpage";
       }, 2000);
