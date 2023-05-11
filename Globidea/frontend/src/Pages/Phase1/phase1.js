@@ -1,9 +1,5 @@
 import React from 'react';
 import Accordion from '../../Components/Accordion/Accordion';
-<<<<<<< HEAD
-import { accordionContent } from './content';
-=======
->>>>>>> back-end
 import '../../Pages/phases.css';
 
 class Phase1 extends React.Component{
