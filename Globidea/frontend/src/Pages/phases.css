@@ -4,6 +4,7 @@
     box-sizing: border-box;
   }
 
+<<<<<<< HEAD
 
   body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -12,6 +13,18 @@
 
   }
   
+=======
+  body {
+    
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    min-height: 100vh;
+    background-color: #FFFFFF; 
+
+  }
+  
+  
+>>>>>>> back-end
   h1 {
     display: flex;
     justify-content: center;
@@ -19,11 +32,27 @@
     height: 25vh;
     font-size: 30;
   }
+<<<<<<< HEAD
   
   .accordion {
     max-width: 600px;
     margin: 2rem auto;
   }
+=======
+
+  p {
+    text-align: center;
+  }
+  
+  .accordion {
+    max-width: 750px;
+    margin: 2rem auto;
+  }
+
+  .accordion-item{
+    margin-bottom: 10px;
+  }
+>>>>>>> back-end
   
   .accordion-title {
     display: flex;
@@ -31,8 +60,15 @@
     justify-content: space-between;
     cursor: pointer;
     background-color: darkred;
+<<<<<<< HEAD
     color: white;
     /*border-radius: 1 rem;*/
+=======
+    color:white;
+
+    /*border-radius: 1 rem;*/
+    border-radius: 15px;
+>>>>>>> back-end
   }
   
   .accordion-title:hover {
@@ -45,11 +81,27 @@
     background-color: darkred;
   }
   
+<<<<<<< HEAD
   .accordion-content {
     background-color: #E2E6E6;
     
   }
   
+=======
+
+  .accordion-content {
+    background-color: transparent;
+    overflow: hidden;
+    transition-duration: 3s;
+    transition-timing-function: ease-in-out;
+  }
+  
+  .accordion-item{
+    border-radius: 2px;
+  }
+
+
+>>>>>>> back-end
   @media screen and (max-width: 700px) {
     body {
       font-size: 18px;
@@ -58,4 +110,27 @@
     .accordion {
       width: 200%;
     }
+<<<<<<< HEAD
   }
+=======
+  }
+
+  .timeline {
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    height: 500px; /* 设置高度 */
+  }
+  
+  .timeline-item {
+    display: flex;
+    align-items: center;
+    margin: -15px;   /*picture spacing*/
+  }
+  
+  .timeline-item-content {
+    margin: 20px;
+  }
+
+  
+>>>>>>> back-end

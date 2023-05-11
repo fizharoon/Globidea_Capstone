@@ -1,0 +1,85 @@
+@import "./background.css"; 
+
+ 
+  .timeline-container {
+    display: flex;
+    justify-content: center;
+    
+  }
+  
+  
+  .timeline-item {
+    position: relative;
+    margin: 0 2.5px;
+    cursor: pointer;
+    
+  }
+  
+  .timeline-item-content {
+    position: relative;
+    overflow: hidden;
+    padding: 10px;
+  }
+  
+  .timeline-item-content img {
+    display: block;
+    width: 200px;
+    height: 280px;
+    transition: opacity 0.5s ease;
+    
+    transform: skew(-20deg, 0deg);
+    position: relative;
+  }
+  
+  .timeline-item-content img::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .timeline-item:hover img::after {
+    opacity: 1;
+  }
+
+  .timeline-item-content h2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    color: #171718;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  
+  .timeline-item:hover img {
+    opacity: 0.5;
+  }
+  
+  .timeline-item:hover .timeline-item-content h2 {
+    opacity: 1;
+  }
+  
+  
+  .timeline-item:nth-child(odd) .timeline-item-content img {
+    transform: perspective(1000px) rotateY(25deg) skewY(0deg);
+  }
+
+
+  .timeline-item:nth-child(even) .timeline-item-content img {
+    transform: perspective(1000px) rotateY(-25deg) skewY(0deg);
+  }
+  
+  .timeline-item-content {
+    transform-style: preserve-3d;
+  }
+  
+  

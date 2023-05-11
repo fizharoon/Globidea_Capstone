@@ -1,0 +1,11 @@
+/* background.css */
+
+ body {
+  background-image: url("../assets/backgroundimg-4.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  opacity: 1.0; 
+} 
+ 
